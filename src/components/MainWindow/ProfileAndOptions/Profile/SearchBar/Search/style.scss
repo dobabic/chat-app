@@ -1,0 +1,25 @@
+@import '../../../../../../scss/config';
+
+.search {
+    @include boxSize(70%, 80%);
+    position: relative;
+
+    input {
+        @include boxSize(100%, 100%);
+        border: none;
+        border-radius: 10px;
+        padding-left: 30px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    img {
+        @include boxSize(70%, 10%);
+        position: absolute;
+        padding: 5px;
+        top: 6px;
+        left: 10px;
+    }
+}

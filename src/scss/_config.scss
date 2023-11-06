@@ -1,0 +1,7 @@
+$background: radial-gradient(#ffffff, #3385c6);
+$hover-color: #B2FFFF;
+
+@mixin boxSize($h, $w) {
+    height: $h;
+    width: $w;
+}

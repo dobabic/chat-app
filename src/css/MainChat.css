@@ -1,0 +1,10 @@
+.mainContainer {
+  height: 70vh;
+  width: 70vw;
+  display: flex;
+  flex-flow: column wrap;
+  background-color: white;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 0 5px black;
+}/*# sourceMappingURL=MainChat.css.map */

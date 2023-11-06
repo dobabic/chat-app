@@ -1,0 +1,45 @@
+@import '../../../scss/config';
+
+.newMessageContainer {
+    @include boxSize(10%, 80%);
+
+    form {
+        @include boxSize(50%, 80%);
+        
+        input {
+
+            line-height: 1.5;
+            text-indent: 10px;
+            width: 85%;
+            font-size: 1.25rem;
+            border-radius: 20px;
+            border: none;
+            background-color: #D3d3d3;
+        }
+
+        input[type="file"] {
+            display: inline-block;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            opacity: 0;
+        }
+    
+        button {
+            height: 2rem;
+            width: 2rem;
+            font-size: 1.25rem;
+            cursor: pointer;
+            border-radius: 20px;
+            border: none;
+            text-align: center;
+            color: white;
+            background-color:   white;
+            vertical-align: top;
+
+            &:hover {
+                border: 1px solid blue;
+            }
+        }
+    }
+}

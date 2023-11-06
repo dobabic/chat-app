@@ -1,0 +1,16 @@
+@import '../../../../../scss/config';
+
+.search-container {
+    @include boxSize(50%, 100%);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    >img {
+        @include boxSize(70%, 10%);
+        background-color: white;
+        border-radius: 10px;
+        padding: 5px;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,13 @@
+.contactList {
+  height: 100%;
+  width: 20%;
+  overflow: auto;
+  border-right: 2px solid gray;
+}
+.contactList .contact {
+  height: 40px;
+  text-indent: 15px;
+}
+.contactList .contact:hover {
+  background-color: #90e0ef;
+}/*# sourceMappingURL=ContactList.css.map */

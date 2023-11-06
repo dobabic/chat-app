@@ -1,0 +1,35 @@
+@import '../../scss/config';
+
+.main-container {
+    @include boxSize(70vh, 70vw);
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 0 5px black;
+
+    .resizeHandler {
+        height: 100%;
+        width: 5px;
+        margin: 0 2px;
+        background: grey;
+    }
+
+    .left-container {
+        @include boxSize(calc(100% - 40px), 100%);
+        display: flex;
+        flex-direction: column;
+
+        .profileAndOptions {
+            @include boxSize(50%, 100%);
+        }
+    }
+
+    .right-container {
+        @include boxSize(calc(100% - 40px), 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

@@ -1,0 +1,30 @@
+@import '../../../scss/config';
+
+.chatContainer {
+    @include boxSize(90%, 100%);
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+
+    .message{
+        display: flex;
+        margin: 5px;
+    }
+    
+    .sent {
+        flex-direction: row-reverse;
+        p, a {
+            border-radius: 15px 15px 0px 15px;
+            background-color: $hover-color;
+            padding: 10px;
+        }
+    }
+    
+    .received {
+        p, a {
+            border-radius: 15px 15px 15px 0px;
+            background-color: #d9dddc;
+            padding: 10px;
+        }
+    }
+}

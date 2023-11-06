@@ -1,0 +1,9 @@
+@import '../../../../scss/config';
+
+.profile {
+    @include boxSize(50%, 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $hover-color;
+}

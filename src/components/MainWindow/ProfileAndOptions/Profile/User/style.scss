@@ -1,0 +1,24 @@
+@import '../../../../../scss/config';
+
+.user-container {
+    @include boxSize(50%, 100%);
+    display: flex;
+    align-items: center;
+
+    .user-image {
+        @include boxSize(80%, 20%);
+        margin-left: 10px;
+        
+        img {
+            max-width:100%;
+            max-height:100%;
+            border-radius: 50%;
+        }
+    }
+
+    .user-info {
+        @include boxSize(100%, 50%);
+        display: flex;
+        align-items: center;
+    }
+}
