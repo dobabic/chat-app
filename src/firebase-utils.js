@@ -5,21 +5,6 @@ import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 const messagesRef = collection(db, "messages");
 const contactRef = collection(db, "contacts");
 
-function getCurrentUser(auth) {
-    return new Promise((resolve, reject) => {
-        try {
-            auth.onAuthStateChanged(user => {
-                resolve(user);
-            })
-        } catch(err) {
-            console.log(err);
-            reject(err);
-        }
-    });
-};
-
-export const loggedUser = await getCurrentUser(auth);
-
 export async function logIn(){
     return signInWithPopup(auth, provider);
 };
@@ -68,15 +53,15 @@ export function isUserLogged(){
         try{
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                    console.log('User Logged In');
+                    //console.log('User Logged In');
                     resolve(user);
                 } else {
-                    console.log('User Not Found.');
+                    //console.log('User Not Found.');
                     resolve(null);
                 }
             })
         } catch(err){
-            console.log(err);
+            //console.log(err);
             reject(err);
         };
     });

@@ -1,8 +1,8 @@
 import './style.scss';
-import { loggedUser } from '../../../../../firebase-utils';
+import { isUserLogged } from '../../../../../firebase-utils';
 
 const defaultImage = "https://placehold.co/200x200";
-const user = loggedUser;
+const user = isUserLogged();
 
 export default function User() {
     return (
