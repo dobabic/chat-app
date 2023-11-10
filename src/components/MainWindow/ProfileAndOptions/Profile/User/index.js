@@ -2,13 +2,13 @@ import './style.scss';
 import { isUserLogged } from '../../../../../firebase-utils';
 
 const defaultImage = "https://placehold.co/200x200";
-const user = isUserLogged();
+const user = await isUserLogged();
 
 export default function User() {
     return (
         <div className="user-container">
             <div className='user-image'>
-                <img src={defaultImage} alt='User Image' />
+                <img src={user.photoURL || defaultImage} alt='User Image' />
             </div>
             <div className='user-info'>
                 <span className='user-name'>{user.displayName}</span>
