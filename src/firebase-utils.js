@@ -53,15 +53,13 @@ export function isUserLogged(){
         try{
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                    //console.log('User Logged In');
                     resolve(user);
                 } else {
-                    //console.log('User Not Found.');
                     resolve(null);
                 }
             })
         } catch(err){
-            //console.log(err);
+            console.log(err);
             reject(err);
         };
     });

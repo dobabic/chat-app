@@ -1,10 +1,18 @@
 import './style.scss';
+import { useEffect, useState } from 'react';
 import { isUserLogged } from '../../../../../firebase-utils';
 
 const defaultImage = "https://placehold.co/200x200";
-const user = await isUserLogged();
 
 export default function User() {
+    const [user, setUser] = useState({})
+
+    useEffect( () => {
+        isUserLogged()
+            .then(setUser)
+            .catch((err)=> console.log(err));
+    }, [])
+
     return (
         <div className="user-container">
             <div className='user-image'>
