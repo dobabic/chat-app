@@ -1,23 +1,33 @@
-import React from "react";
-import { useState, useEffect } from 'react';
-import { isUserLogged } from "./firebase-utils";
+import React, { useState, useEffect, createContext } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase-config";
 import './css/style.css';
 
 import LoginButton  from './components/Buttons/LoginButton';
 import MainWindow from "./components/MainWindow/index";
 
+export const UserContext = createContext();
+
+
 export default function App(){
-    const [user, setUser] = useState();
+    const [currentUser, setCurrentUser] = useState(null);
 
-    useEffect( () => {
-        isUserLogged()
-            .then(setUser)
-            .catch((err)=> console.log(err));
-    }, [])
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, user => {
+            if(user) {
+                setCurrentUser(user);
+            } else {
+                console.log(`User: ` + null);
+            }
+        })
+        return unsubscribe
+      }, [])
 
-    return(
+    return (
         <div className="App">
-            {user ? <MainWindow setUser={setUser}/> : <LoginButton setUser={setUser}/>}
+            <UserContext.Provider value={ currentUser }>
+                {currentUser ? <MainWindow setCurrentUser={setCurrentUser} /> : <LoginButton />}
+            </UserContext.Provider>
         </div>
     )
 }

@@ -11,7 +11,7 @@ import './style.scss';
 
 import { useState } from 'react';
 
-export default function MainWindow({ setUser }){
+export default function MainWindow({ setCurrentUser }){
     const [selectedContact, setSelectedContact] = useState();
 
     return(
@@ -34,7 +34,7 @@ export default function MainWindow({ setUser }){
                     </Panel>
                 </PanelGroup>
             </div>
-            <LogoutButton setUser={setUser}/>
+            <LogoutButton setCurrentUser={setCurrentUser}/>
         </>
     )
 }

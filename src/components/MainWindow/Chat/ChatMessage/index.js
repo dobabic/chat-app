@@ -1,10 +1,11 @@
 import Linkify from "linkify-react";
-import { auth } from '../../../../../firebase-config';
+import { useContext } from 'react';
+import { UserContext } from "../../../../App";
 import '../style.scss'
 
 export function ChatMessage(props){
+    const user = useContext(UserContext);
     const { text, uid } = props.message;
-    const user = auth.currentUser;
     const messageClass = uid === user.uid ? 'sent' : 'received'
 
     return(

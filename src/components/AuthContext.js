@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
 
@@ -13,18 +13,28 @@ import { auth } from "../../firebase-config";
 
 // Pass that value to other components 
 
-function placeHolderName() {
-    const [user, setUser] = useState();
+const UserContext = createContext(null);
 
-    onAuthStateChanged(auth, (user) => {
-        if(user) {
-            console.log(placeHolderName);
-            setUser(user);
-        } else {
-            console.log(null, 'placeHolder')
-        }
-    })
+
+export function useAuth() {
+    return useContext(UserContext)
 }
 
-// const user = await isUserLogged();
-// export const UserContext = createContext();
+export function AuthProvider() {
+    const [currentUser, setCurrentUser] = useState();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, user => {
+            if(user) {
+                setCurrentUser(user)
+            } else {
+                console.log(`User: ` + null)
+            }
+        })
+        return unsubscribe
+      }, [])
+
+    //   return (
+
+    //   )
+}

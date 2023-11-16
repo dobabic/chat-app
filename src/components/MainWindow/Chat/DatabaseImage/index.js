@@ -1,18 +1,19 @@
-import { auth } from '../../../../../firebase-config';
+import { useContext } from 'react';
+import { UserContext } from '../../../../App';
 import '../style.scss'
 
-export default function YoutubeEmbed(props) {
+export function DatabaseImage(props) {
     const { uid, text } = props.message;
-    const user = auth.currentUser;
+    const user = useContext(UserContext);
     const messageClass = uid === user.uid ? 'sent' : 'received'
-    const videoId = /\?v=(.{11})/.exec(text)[1]
 
     return (
         <div className={`message ${messageClass}`}>
-            <iframe 
+            <img
+            src={text}
+            alt='Db Image'
             width="300"
             height="200"
-            src={`https://www.youtube.com/embed/${videoId}`}
             />
         </div>
     )
