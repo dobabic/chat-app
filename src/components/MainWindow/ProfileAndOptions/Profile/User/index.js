@@ -7,7 +7,7 @@ const defaultImage = "https://placehold.co/200x200";
 export default function User() {
     const [user, setUser] = useState({})
 
-    useEffect( () => {
+    useEffect(() => {
         isUserLogged()
             .then(setUser)
             .catch((err)=> console.log(err));

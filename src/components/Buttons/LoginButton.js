@@ -8,8 +8,7 @@ export default function LoginButton({ setUser }){
             .then(setUser)
             .catch((err)=> console.log(err));
     }
-    return(
+    return (
         <button className='Button' onClick={handleSignIn}>Sign in with Google</button>
-
     )
 }
