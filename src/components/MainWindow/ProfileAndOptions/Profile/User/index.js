@@ -1,11 +1,10 @@
 import './style.scss';
-import { useContext } from 'react';
-import { UserContext } from '../../../../../App';
+import { useAuth } from '../../../../UserContext';
 
 const defaultImage = "https://placehold.co/200x200";
 
 export default function User() {
-    const currentUser = useContext(UserContext);
+    const { currentUser } = useAuth();
 
     return (
         <div className="user-container">

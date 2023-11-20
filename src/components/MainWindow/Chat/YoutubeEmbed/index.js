@@ -1,11 +1,10 @@
-import { useContext } from 'react';
-import { UserContext } from '../../../../App';
+import { useAuth } from '../../../UserContext';
 import '../style.scss'
 
 export function YoutubeEmbed(props) {
     const { uid, text } = props.message;
-    const user = useContext(UserContext);
-    const messageClass = uid === user.uid ? 'sent' : 'received'
+    const { currentUser } = useAuth();
+    const messageClass = uid === currentUser.uid ? 'sent' : 'received'
     const videoId = /\?v=(.{11})/.exec(text)[1]
 
     return (

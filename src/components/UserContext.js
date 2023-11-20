@@ -2,25 +2,17 @@ import { useState, useEffect, createContext, useContext } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
 
+// 1. Create context
+const UserContext = createContext();
 
-//1. login via login button
-//2. onAuthStateChanged u Context component se triggera
-//3. unutar OASC setUser state
-//4. taj state se dijeli dalje down-the-tree
-
-//1. dodati onAuthStateChanged koji ce popunit useState koji cu koristit u createContext
-//1a.On login populate user context variable via onAuthStateChanged
-
-// Pass that value to other components 
-
-const UserContext = createContext(null);
-
-
+// 2. Consume context
 export function useAuth() {
-    return useContext(UserContext)
+    return useContext(UserContext);
 }
 
-export function AuthProvider() {
+
+// 3. Provide context
+export function UserContextProvider({children}) {
     const [currentUser, setCurrentUser] = useState();
 
     useEffect(() => {
@@ -32,9 +24,17 @@ export function AuthProvider() {
             }
         })
         return unsubscribe
-      }, [])
+    }, [])
+    
+    const value = {
+        currentUser,
+        setCurrentUser
+    }
 
-    //   return (
+      return (
+        <UserContext.Provider value={value}>
+            {children}
+        </UserContext.Provider>
 
-    //   )
+      )
 }

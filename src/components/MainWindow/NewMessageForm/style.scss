@@ -5,6 +5,7 @@
 
     form {
         @include boxSize(50%, 80%);
+        margin: 0 auto;
         
         input {
 
