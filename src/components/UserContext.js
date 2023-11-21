@@ -10,7 +10,6 @@ export function useAuth() {
     return useContext(UserContext);
 }
 
-
 // 3. Provide context
 export function UserContextProvider({children}) {
     const [currentUser, setCurrentUser] = useState();

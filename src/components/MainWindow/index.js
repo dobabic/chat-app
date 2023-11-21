@@ -19,7 +19,7 @@ export default function MainWindow(){
             <div className='main-container'>
                 <Header/>
                 <PanelGroup direction="horizontal">
-                    <Panel className="left-container" minSize={25} defaultSize={25}>
+                    <Panel className="left-container" minSizePercentage={20} defaultSizePercentage={25}>
                         <div className="profileAndOptions">
                             <Profile />
                             <Options />
@@ -27,7 +27,7 @@ export default function MainWindow(){
                         <ContactList onContactClick={setSelectedContact}/>
                     </Panel>
                     <PanelResizeHandle className="resizeHandler" />
-                    <Panel className="right-container"minSize={50}>
+                    <Panel className="right-container" minSizePercentage={60}>
                         <ContactInfo contact={selectedContact} />
                         <Chat />    
                         <NewMessageForm />

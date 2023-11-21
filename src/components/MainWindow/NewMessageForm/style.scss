@@ -1,10 +1,12 @@
 @import '../../../scss/config';
 
 .newMessageContainer {
-    @include boxSize(10%, 80%);
+    @include boxSize(10%, 75%);
+    display: flex;
+    align-items: center;
 
     form {
-        @include boxSize(50%, 80%);
+        @include boxSize(50%, 100%);
         margin: 0 auto;
         
         input {
