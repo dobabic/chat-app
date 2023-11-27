@@ -1,29 +1,35 @@
-.search {
-  height: 70%;
-  width: 80%;
-  position: relative;
+.newMessageContainer {
+  height: 10%;
+  width: 75%;
+  display: flex;
+  align-items: center;
 }
-.search input {
-  height: 100%;
+.newMessageContainer form {
+  height: 50%;
   width: 100%;
+  margin: 0 auto;
+}
+.newMessageContainer form input {
+  line-height: 1.5;
+  text-indent: 10px;
+  width: 85%;
+  font-size: 1.25rem;
+  border-radius: 20px;
   border: none;
-  border-radius: 10px;
-  padding-left: 35px;
+  background-color: #D3d3d3;
 }
-.search input:hover {
-  cursor: pointer;
+.newMessageContainer form input[type=file] {
+  display: inline-block;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
 }
-.search img {
-  height: 70%;
-  width: 10%;
-  position: absolute;
-  padding: 5px;
-  top: 6px;
-  left: 10px;
-} form button {
+.newMessageContainer form button {
   height: 2rem;
   width: 2rem;
   cursor: pointer;
+  border: white;
   border-radius: 20px;
   text-align: center;
   background-color: white;
