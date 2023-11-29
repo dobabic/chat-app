@@ -5,6 +5,7 @@ import './style.scss';
 const defaultImage = "https://placehold.co/200x200";
 
 function Contact({contact, onClick}) {
+    
     function handleClick() {
         onClick(contact);
     };

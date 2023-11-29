@@ -1,10 +1,10 @@
-import { auth } from '../../../../../firebase-config';
+import { useAuth } from '../../../UserContext';
 import '../style.scss'
 
-export default function DatabaseImage(props) {
+export function DatabaseImage(props) {
     const { uid, text } = props.message;
-    const user = auth.currentUser;
-    const messageClass = uid === user.uid ? 'sent' : 'received'
+    const { currentUser } = useAuth();
+    const messageClass = uid === currentUser.uid ? 'sent' : 'received'
 
     return (
         <div className={`message ${messageClass}`}>

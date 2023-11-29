@@ -1,14 +1,15 @@
 import { logOut } from "../../firebase-utils"; 
+import { useAuth } from "../UserContext";
 import './style.scss';
 
-export default function LogoutButton({ setUser }){
-
+export default function LogoutButton(){
+    const {setCurrentUser} = useAuth();
+    
     function handleLogout(){
         logOut()
-            .then(setUser(false))
-            .catch((err)=> console.log(err));
+        .then(setCurrentUser)
     }
-    return(
+    return (
         <button className='Button' onClick={handleLogout}>Logout</button>
     )
 }

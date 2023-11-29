@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { getMessages } from '../../../firebase-utils';
 import { ChatMessage } from './ChatMessage/index';
-import YoutubeEmbed from './YoutubeEmbed/YoutubeEmbed';
-import DatabaseImage from './DatabaseImage/DatabaseImage';
+import { YoutubeEmbed } from './YoutubeEmbed/index';
+import { DatabaseImage } from './DatabaseImage/index';
 import './style.scss';
 
 const msgComponents = {
@@ -11,22 +11,19 @@ const msgComponents = {
     'image': DatabaseImage,
 };
 
-// function scrollIntoView() {
-//     return ref.current.scrollIntoView({behavior: 'smooth'});
-// }
-
 export default function Chat() {
     const [messages, setMessages] = useState([]);
-    const ref = useRef();
+    const ref = useRef(null);
 
+
+    // Review useEffect and rework it - working in infinite loop
+    // Currently getting messages only once -> empty []
     useEffect( () => {
         getMessages()
             .then(setMessages)
-            //.then(scrollIntoView)
             .catch((err)=> console.log(err));
-    }, [messages]);
+    }, []);
 
-    
     return (
         <div className="chatContainer">
             {messages.map(msg => {

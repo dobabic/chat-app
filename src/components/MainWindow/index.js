@@ -11,7 +11,7 @@ import './style.scss';
 
 import { useState } from 'react';
 
-export default function MainWindow({ setUser }){
+export default function MainWindow(){
     const [selectedContact, setSelectedContact] = useState();
 
     return(
@@ -19,7 +19,7 @@ export default function MainWindow({ setUser }){
             <div className='main-container'>
                 <Header/>
                 <PanelGroup direction="horizontal">
-                    <Panel className="left-container" minSize={25} defaultSize={25}>
+                    <Panel className="left-container" minSizePercentage={20} defaultSizePercentage={25}>
                         <div className="profileAndOptions">
                             <Profile />
                             <Options />
@@ -27,14 +27,14 @@ export default function MainWindow({ setUser }){
                         <ContactList onContactClick={setSelectedContact}/>
                     </Panel>
                     <PanelResizeHandle className="resizeHandler" />
-                    <Panel className="right-container"minSize={50}>
+                    <Panel className="right-container" minSizePercentage={60}>
                         <ContactInfo contact={selectedContact} />
                         <Chat />    
                         <NewMessageForm />
                     </Panel>
                 </PanelGroup>
             </div>
-            <LogoutButton setUser={setUser}/>
+            <LogoutButton />
         </>
     )
 }
