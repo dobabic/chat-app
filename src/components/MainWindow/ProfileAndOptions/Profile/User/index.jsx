@@ -1,3 +1,4 @@
+import React from 'react';
 import './style.scss';
 import { useAuth } from '../../../../UserContext';
 
@@ -9,7 +10,7 @@ export default function User() {
   return (
     <div className="user-container">
       <div className="user-image">
-        <img src={currentUser.photoURL || defaultImage} alt="User Image" />
+        <img src={currentUser.photoURL || defaultImage} alt="User Logo" />
       </div>
       <div className="user-info">
         <span className="user-name">{currentUser.displayName}</span>

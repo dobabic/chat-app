@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getContacts } from '../../../firebase-utils';
 import './style.scss';
 
@@ -12,7 +12,7 @@ function Contact({ contact, onClick }) {
     <div className="contact" onClick={handleClick}>
       <img
         src={contact.image || defaultImage}
-        alt="Contact Image"
+        alt="Contact Logo"
       />
       <span className="contact-name">{contact}</span>
     </div>

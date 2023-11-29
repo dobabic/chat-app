@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { getMessages } from '../../../firebase-utils';
-import { ChatMessage } from './ChatMessage/index';
-import { YoutubeEmbed } from './YoutubeEmbed/index';
-import { DatabaseImage } from './DatabaseImage/index';
+import ChatMessage from './ChatMessage';
+import YoutubeEmbed from './YoutubeEmbed';
+import DatabaseImage from './DatabaseImage';
 import './style.scss';
 
 const msgComponents = {

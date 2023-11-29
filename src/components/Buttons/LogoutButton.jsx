@@ -1,3 +1,4 @@
+import React from 'react';
 import { logOut } from '../../firebase-utils';
 import { useAuth } from '../UserContext';
 import './style.scss';
@@ -10,6 +11,6 @@ export default function LogoutButton() {
       .then(setCurrentUser);
   }
   return (
-    <button className="Button" onClick={handleLogout}>Logout</button>
+    <button type="button" className="Button" onClick={handleLogout}>Logout</button>
   );
 }

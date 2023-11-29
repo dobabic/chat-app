@@ -1,3 +1,4 @@
+import React from 'react';
 import './style.scss';
 
 export default function Dropdown({ imgSrc, text }) {
@@ -5,6 +6,7 @@ export default function Dropdown({ imgSrc, text }) {
     <div className="dropdown">
       <img
         src={imgSrc}
+        alt="Dropdown"
       />
       <select>
         <option value="">{text}</option>

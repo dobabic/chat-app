@@ -1,3 +1,4 @@
+import React from 'react';
 import './style.scss';
 
 export default function Header() {
@@ -5,9 +6,9 @@ export default function Header() {
     <div className="header">
       <div className="title"> Skype</div>
       <div className="windowControls">
-        <button>_</button>
-        <button>M</button>
-        <button>X</button>
+        <button type="button">_</button>
+        <button type="button">M</button>
+        <button type="button">X</button>
       </div>
     </div>
   );

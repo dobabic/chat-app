@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { sendMessage } from '../../../firebase-utils';
 import './style.scss';
 
 import { storage } from '../../../../firebase-config';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export default function NewMessageForm() {
   const [newMessage, setNewMessage] = useState('');
@@ -48,7 +48,7 @@ export default function NewMessageForm() {
         </button>
         <label className="upload-label">
           <input id="uploadImage" type="file" onChange={(event) => setFileToUpload(event.target.files[0])} />
-          <button onClick={handleUpload}>&#x1F4CE;</button>
+          <button type="button" onClick={handleUpload}>&#x1F4CE;</button>
         </label>
       </form>
     </div>

@@ -1,3 +1,4 @@
+import React from 'react';
 import './style.scss';
 
 const defaultImage = 'https://placehold.co/200x200';
@@ -8,7 +9,7 @@ export default function ContactInfo({ contact }) {
       <div className="contact-image">
         <img
           src={defaultImage}
-          alt="User Image"
+          alt="User Logo"
         />
       </div>
       <div className="contact-name">

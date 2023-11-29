@@ -1,3 +1,4 @@
+import React from 'react';
 import './style.scss';
 
 export default function Tab({ imgSrc, name }) {
@@ -5,6 +6,7 @@ export default function Tab({ imgSrc, name }) {
     <div className="tab">
       <img
         src={imgSrc}
+        alt="Tab"
       />
       <p>{name}</p>
     </div>

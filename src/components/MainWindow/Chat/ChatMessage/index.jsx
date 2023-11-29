@@ -1,19 +1,18 @@
+import React from 'react';
+import Linkify from 'linkify-react';
 import { useAuth } from '../../../UserContext';
 import '../style.scss';
 
-export function DatabaseImage(props) {
-  const { uid, text } = props.message;
+export default function ChatMessage(props) {
   const { currentUser } = useAuth();
+  const { text, uid } = props;
   const messageClass = uid === currentUser.uid ? 'sent' : 'received';
 
   return (
     <div className={`message ${messageClass}`}>
-      <img
-        src={text}
-        alt="Db Image"
-        width="300"
-        height="200"
-      />
+      <Linkify as="p">
+        {text}
+      </Linkify>
     </div>
   );
 }

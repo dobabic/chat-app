@@ -1,7 +1,7 @@
 import {
   addDoc, collection, serverTimestamp, onSnapshot, query, orderBy,
 } from 'firebase/firestore';
-import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
+import { signInWithPopup, signOut } from 'firebase/auth';
 import { db, auth, provider } from '../firebase-config';
 
 const messagesRef = collection(db, 'messages');
@@ -48,24 +48,6 @@ export function getCollection(query) {
   });
   return promise;
 }
-
-// export function isUserLogged(){
-//     const promise = new Promise((resolve, reject)=> {
-//         try{
-//             onAuthStateChanged(auth, (user) => {
-//                 if (user) {
-//                     resolve(user);
-//                 } else {
-//                     resolve(null);
-//                 }
-//             })
-//         } catch(err){
-//             console.log(err);
-//             reject(err);
-//         };
-//     });
-//     return promise;
-// };
 
 export async function getMessages() {
   const messagesQuery = query(messagesRef, orderBy('createdAt'));
