@@ -5,8 +5,8 @@ import Profile from './ProfileAndOptions/Profile';
 import Options from './ProfileAndOptions/Options';
 import ContactList from './ContactList';
 import ContactInfo from './ContactInfo';
-import Chat from './Chat/index';
-import NewMessageForm from './NewMessageForm/index';
+import Chat from './Chat';
+import NewMessageForm from './NewMessageForm';
 import LogoutButton from '../Buttons/LogoutButton';
 import './style.scss';
 
