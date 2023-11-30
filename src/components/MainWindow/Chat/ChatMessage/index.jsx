@@ -5,7 +5,7 @@ import '../style.scss';
 
 export default function ChatMessage(props) {
   const { currentUser } = useAuth();
-  const { text, uid } = props;
+  const { text, uid } = props.message;
   const messageClass = uid === currentUser.uid ? 'sent' : 'received';
 
   return (

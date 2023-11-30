@@ -46,7 +46,7 @@ export default function NewMessageForm() {
         <button type="submit">
           ✉️
         </button>
-        <label className="upload-label">
+        <label htmlFor="uploadImage" className="upload-label">
           <input id="uploadImage" type="file" onChange={(event) => setFileToUpload(event.target.files[0])} />
           <button type="button" onClick={handleUpload}>&#x1F4CE;</button>
         </label>

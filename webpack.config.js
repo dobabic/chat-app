@@ -8,7 +8,7 @@ module.exports = {
     runtimeChunk: 'single',
   },
   entry: {
-    main: path.resolve(__dirname, 'src/index.js'),
+    main: path.resolve(__dirname, 'src/index.jsx'),
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -25,6 +25,9 @@ module.exports = {
     hot: true,
     compress: true,
     historyApiFallback: true,
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
