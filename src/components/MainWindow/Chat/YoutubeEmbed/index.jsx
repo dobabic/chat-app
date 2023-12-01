@@ -1,9 +1,8 @@
 import React from 'react';
-import { useAuth } from '../../../UserContext';
+import { useAuth } from '../../../../context/UserContext';
 import '../style.scss';
 
-export default function YoutubeEmbed(props) {
-  const { uid, text } = props.message;
+export default function YoutubeEmbed({ uid, text }) {
   const { currentUser } = useAuth();
   const messageClass = uid === currentUser.uid ? 'sent' : 'received';
   const videoId = /\?v=(.{11})/.exec(text)[1];

@@ -1,11 +1,10 @@
 import React from 'react';
 import Linkify from 'linkify-react';
-import { useAuth } from '../../../UserContext';
+import { useAuth } from '../../../../context/UserContext';
 import '../style.scss';
 
-export default function ChatMessage(props) {
+export default function ChatMessage({ uid, text }) {
   const { currentUser } = useAuth();
-  const { text, uid } = props.message;
   const messageClass = uid === currentUser.uid ? 'sent' : 'received';
 
   return (

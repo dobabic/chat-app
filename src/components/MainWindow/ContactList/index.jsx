@@ -8,8 +8,15 @@ function Contact({ contact, onClick }) {
   function handleClick() {
     onClick(contact);
   }
+
   return (
-    <div className="contact" onClick={handleClick}>
+    <div
+      role="button"
+      tabIndex={0}
+      className="contact"
+      onClick={handleClick}
+      onKeyDown={handleClick}
+    >
       <img
         src={contact.image || defaultImage}
         alt="Contact Logo"

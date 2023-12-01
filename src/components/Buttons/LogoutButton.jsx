@@ -1,6 +1,6 @@
 import React from 'react';
 import { logOut } from '../../firebase-utils';
-import { useAuth } from '../UserContext';
+import { useAuth } from '../../context/UserContext';
 import './style.scss';
 
 export default function LogoutButton() {

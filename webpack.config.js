@@ -28,6 +28,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      Context: path.resolve(__dirname, '/context/UserContext'),
+    },
   },
   module: {
     rules: [
