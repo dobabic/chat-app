@@ -1,5 +1,5 @@
 import React from 'react';
-import { logIn } from '../../firebase-utils';
+import { logIn } from 'Utilities';
 import './style.scss';
 
 export default function LoginButton() {

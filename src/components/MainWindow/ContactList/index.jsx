@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getContacts } from '../../../firebase-utils';
+import { getContacts } from 'Utilities';
 import './style.scss';
 
 const defaultImage = 'https://placehold.co/200x200';

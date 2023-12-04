@@ -27,10 +27,13 @@ module.exports = {
     historyApiFallback: true,
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
     alias: {
-      Context: path.resolve(__dirname, '/context/UserContext'),
+      Context: path.resolve(__dirname, 'src/context'),
+      Utilities: path.resolve(__dirname, 'src/firebase-utils'),
+      Config: path.resolve('/firebase-config.js'),
+      Assets: path.resolve(__dirname, '/src/assets'),
     },
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [

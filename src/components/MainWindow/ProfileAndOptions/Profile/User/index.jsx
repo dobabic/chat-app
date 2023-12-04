@@ -1,7 +1,6 @@
 import React from 'react';
 import './style.scss';
-import { useAuth } from '../../../../../context/UserContext';
-// import { useAuth } from 'Context';
+import { useAuth } from 'Context/UserContext';
 
 const defaultImage = 'https://placehold.co/200x200';
 

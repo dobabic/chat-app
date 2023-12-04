@@ -1,12 +1,11 @@
 import React from 'react';
+import chat from 'Assets/chat.svg';
+import contact from 'Assets/contact.svg';
+import skype from 'Assets/skype.svg';
+import search from 'Assets/magnifying-glass.svg';
 import Tab from './Tab';
 import Dropdown from './Dropdown';
 import './style.scss';
-
-import chat from '../../../../assets/chat.svg';
-import contact from '../../../../assets/contact.svg';
-import skype from '../../../../assets/skype.svg';
-import search from '../../../../assets/magnifying-glass.svg';
 
 export default function TabsAndDropdowns() {
   return (
