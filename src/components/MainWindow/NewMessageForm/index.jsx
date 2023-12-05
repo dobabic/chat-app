@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { sendMessage } from '../../../firebase-utils';
+import { sendMessage } from 'Utilities';
 import './style.scss';
-
-import { storage } from '../../../../firebase-config';
+import { storage } from 'Config';
 
 export default function NewMessageForm() {
   const [newMessage, setNewMessage] = useState('');

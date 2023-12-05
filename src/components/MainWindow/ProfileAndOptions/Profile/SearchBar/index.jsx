@@ -1,9 +1,8 @@
 import React from 'react';
+import chat from 'Assets/chat.svg';
+import search from 'Assets/magnifying-glass.svg';
 import Search from './Search';
 import './style.scss';
-
-import chat from '../../../../../assets/chat.svg';
-import search from '../../../../../assets/magnifying-glass.svg';
 
 export default function SearchBar() {
   return (

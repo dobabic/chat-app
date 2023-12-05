@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { UserContextProvider } from './context/UserContext';
+import { UserContextProvider } from 'Context/UserContext';
 import App from './App';
 import './scss/style.scss';
 

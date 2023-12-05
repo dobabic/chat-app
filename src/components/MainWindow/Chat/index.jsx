@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getMessages } from '../../../firebase-utils';
+import { getMessages } from 'Utilities';
 import ChatMessage from './ChatMessage';
 import YoutubeEmbed from './YoutubeEmbed';
 import DatabaseImage from './DatabaseImage';

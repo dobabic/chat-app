@@ -1,6 +1,6 @@
 import React from 'react';
 import Linkify from 'linkify-react';
-import { useAuth } from '../../../../context/UserContext';
+import { useAuth } from 'Context/UserContext';
 import '../style.scss';
 
 export default function ChatMessage({ uid, text }) {

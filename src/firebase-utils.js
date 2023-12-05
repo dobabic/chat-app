@@ -2,7 +2,7 @@ import {
   addDoc, collection, serverTimestamp, onSnapshot, query, orderBy,
 } from 'firebase/firestore';
 import { signInWithPopup, signOut } from 'firebase/auth';
-import { db, auth, provider } from '../firebase-config';
+import { db, auth, provider } from 'Config';
 
 const messagesRef = collection(db, 'messages');
 const contactRef = collection(db, 'contacts');
