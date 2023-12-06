@@ -22,9 +22,6 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-<<<<<<< HEAD
-=======
     'react/prop-types': 'off',
->>>>>>> develop-npm-update
   },
 };

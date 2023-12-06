@@ -8,11 +8,7 @@ module.exports = {
     runtimeChunk: 'single',
   },
   entry: {
-<<<<<<< HEAD
-    main: path.resolve(__dirname, 'src/index.js'),
-=======
     main: path.resolve(__dirname, 'src/index.jsx'),
->>>>>>> develop-npm-update
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -30,8 +26,6 @@ module.exports = {
     compress: true,
     historyApiFallback: true,
   },
-<<<<<<< HEAD
-=======
   resolve: {
     alias: {
       Context: path.resolve(__dirname, 'src/context'),
@@ -42,7 +36,6 @@ module.exports = {
     },
     extensions: ['.js', '.jsx'],
   },
->>>>>>> develop-npm-update
   module: {
     rules: [
       {
