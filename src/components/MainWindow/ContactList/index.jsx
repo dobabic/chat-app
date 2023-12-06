@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { getContacts } from 'Utilities';
 import './style.scss';
 
 const defaultImage = 'https://placehold.co/200x200';
 
-function Contact({ contact, onClick }) {
+function Contact({ contact, id, onClick }) {
   function handleClick() {
     onClick(contact);
   }
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      className="contact"
+    <NavLink
+      to={`messages/${id}`}
+      className={({ isActive }) => (isActive ? 'active contact' : 'pending contact')}
       onClick={handleClick}
       onKeyDown={handleClick}
     >
@@ -21,8 +21,8 @@ function Contact({ contact, onClick }) {
         src={contact.image || defaultImage}
         alt="Contact Logo"
       />
-      <span className="contact-name">{contact}</span>
-    </div>
+      <span>{contact}</span>
+    </NavLink>
   );
 }
 
@@ -38,7 +38,7 @@ export default function ContactList({ onContactClick }) {
   return (
     <div className="contactList">
       {contacts.map((contact) => (
-        <Contact key={contact.id} contact={contact.name} onClick={onContactClick} />
+        <Contact key={contact.id} id={contact.id} contact={contact.name} onClick={onContactClick} />
       ))}
     </div>
   );

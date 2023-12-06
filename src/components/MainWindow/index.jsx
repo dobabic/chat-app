@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
+import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Profile from './ProfileAndOptions/Profile';
 import Options from './ProfileAndOptions/Options';
@@ -28,7 +29,8 @@ export default function MainWindow() {
           <PanelResizeHandle className="resizeHandler" />
           <Panel className="right-container" minSizePercentage={60}>
             <ContactInfo contact={selectedContact} />
-            <Chat />
+            <Outlet />
+            {/* <Chat /> */}
             <NewMessageForm />
           </Panel>
         </PanelGroup>

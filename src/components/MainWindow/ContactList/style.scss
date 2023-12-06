@@ -5,6 +5,17 @@
     @include boxSize(100%, 100%);
     overflow: auto;
 
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    img {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+    }
+
     .contact {
         display: flex;
         align-items: center;
@@ -16,17 +27,15 @@
         &:hover {
             background-color: $hover-color;
         }
-
-        img {
-            height: 40px;
-            width: 40px;
-            border-radius: 50%;
-        }
-
-        .contact-name {
+        
+        > span {
             @include boxSize(100%, 100%);
             display: flex;
             align-items: center;
         }
+    }
+
+    .active { 
+        background: $hover-color;
     }
 }

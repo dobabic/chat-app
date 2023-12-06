@@ -41,6 +41,7 @@
     "linkifyjs": "^4.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-resizable-panels": "^0.0.61"
+    "react-resizable-panels": "^0.0.61",
+    "react-router-dom": "^6.20.1"
   }
 }
