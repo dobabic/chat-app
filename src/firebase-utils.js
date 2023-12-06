@@ -1,13 +1,8 @@
 import {
   addDoc, collection, serverTimestamp, onSnapshot, query, orderBy,
 } from 'firebase/firestore';
-<<<<<<< HEAD
-import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
-import { db, auth, provider } from '../firebase-config';
-=======
 import { signInWithPopup, signOut } from 'firebase/auth';
 import { db, auth, provider } from 'Config';
->>>>>>> develop-npm-update
 
 const messagesRef = collection(db, 'messages');
 const contactRef = collection(db, 'contacts');
@@ -53,39 +48,12 @@ export function getCollection(query) {
   });
   return promise;
 }
-<<<<<<< HEAD
-
-// export function isUserLogged(){
-//     const promise = new Promise((resolve, reject)=> {
-//         try{
-//             onAuthStateChanged(auth, (user) => {
-//                 if (user) {
-//                     resolve(user);
-//                 } else {
-//                     resolve(null);
-//                 }
-//             })
-//         } catch(err){
-//             console.log(err);
-//             reject(err);
-//         };
-//     });
-//     return promise;
-// };
 
 export async function getMessages() {
   const messagesQuery = query(messagesRef, orderBy('createdAt'));
   return getCollection(messagesQuery);
 }
 
-=======
-
-export async function getMessages() {
-  const messagesQuery = query(messagesRef, orderBy('createdAt'));
-  return getCollection(messagesQuery);
-}
-
->>>>>>> develop-npm-update
 export async function getContacts() {
   const contactsQuery = query(contactRef);
   return getCollection(contactsQuery);
