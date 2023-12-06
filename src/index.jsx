@@ -19,7 +19,7 @@ const router = createBrowserRouter([
       { index: true, element: <Chat /> },
       {
         path: '/messages/:contactId',
-        element: <div>contactId</div>,
+        element: <div>Placeholder Text</div>,
       },
     ],
   },
