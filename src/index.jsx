@@ -5,6 +5,9 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { UserContextProvider } from 'Context/UserContext';
+import ChatRoute, {
+  loader as chatLoader,
+} from './routes/chat';
 import Settings from './routes/settings';
 import Account from './routes/account';
 import App from './App';
@@ -19,7 +22,8 @@ const router = createBrowserRouter([
       { index: true, element: <Chat /> },
       {
         path: '/messages/:contactId',
-        element: <div>Placeholder Text</div>,
+        element: <ChatRoute />,
+        loader: chatLoader,
       },
     ],
   },
