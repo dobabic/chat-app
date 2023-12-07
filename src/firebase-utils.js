@@ -30,7 +30,7 @@ export async function sendMessage(newMessage) {
     text: newMessage,
     createdAt: serverTimestamp(),
     type: determineMsgType(newMessage),
-    uid,
+    sender: uid,
   });
 }
 

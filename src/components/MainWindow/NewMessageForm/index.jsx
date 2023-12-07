@@ -16,23 +16,23 @@ export default function NewMessageForm() {
     setNewMessage('');
   };
 
-  function handleUpload() {
-    const imagesRef = ref(storage, `images/${fileToUpload.name}`);
-    uploadBytes(imagesRef, fileToUpload)
-      .then((data) => {
-        console.log(data);
-        getDownloadURL(data.ref)
-          .then((url) => {
-            setNewMessage(url);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  // function handleUpload() {
+  //   const imagesRef = ref(storage, `images/${fileToUpload.name}`);
+  //   uploadBytes(imagesRef, fileToUpload)
+  //     .then((data) => {
+  //       console.log(data);
+  //       getDownloadURL(data.ref)
+  //         .then((url) => {
+  //           setNewMessage(url);
+  //         })
+  //         .catch((error) => {
+  //           console.log(error);
+  //         });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
   return (
     <div className="newMessageContainer">
