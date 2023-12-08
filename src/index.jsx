@@ -6,10 +6,13 @@ import {
 } from 'react-router-dom';
 import { UserContextProvider } from 'Context/UserContext';
 import ChatRoute, {
-  loader as chatLoader,
-  action as chatAction,
-} from './routes/chat';
-import ChatWindow from './components/MainWindow/ChatWindow';
+  loader as pvtChatLoader,
+  action as pvtChatAction,
+} from './routes/pvtChat';
+import Chat, {
+  loader as mainChatLoader,
+  action as mainChatAction,
+} from './routes';
 import Settings from './routes/settings';
 import Account from './routes/account';
 import App from './App';
@@ -20,12 +23,17 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: [
-      { index: true, element: <ChatWindow /> },
+      {
+        index: true,
+        element: <Chat />,
+        loader: mainChatLoader,
+        action: mainChatAction,
+      },
       {
         path: '/messages/:contactId',
         element: <ChatRoute />,
-        loader: chatLoader,
-        action: chatAction,
+        loader: pvtChatLoader,
+        action: pvtChatAction,
       },
     ],
   },
