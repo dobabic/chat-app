@@ -1,23 +1,20 @@
 import React, { useEffect } from 'react';
-import { Form, useLoaderData, redirect } from 'react-router-dom';
+import { Form, redirect, useLoaderData } from 'react-router-dom';
 import { getMessages, sendMessage } from 'Utilities';
 import ChatMessage from '../components/MainWindow/ChatWindow/Chat/ChatMessage';
 import DatabaseImage from '../components/MainWindow/ChatWindow/Chat/DatabaseImage';
 import YoutubeEmbed from '../components/MainWindow/ChatWindow/Chat/YoutubeEmbed';
-import '../components/MainWindow/ChatWindow/NewMessageForm/style.scss';
 
-export async function loader({ params }) {
+export async function loader() {
   const messages = await getMessages();
-  const filteredMessages = messages.filter((msg) => msg.receiver === params.contactId);
-  return { filteredMessages };
+  return { messages };
 }
 
-export async function action({ request, params }) {
-  const { contactId } = params;
+export async function action({ request }) {
   const formData = await request.formData();
   const message = formData.get('newMessage');
-  await sendMessage(message, contactId);
-  return redirect(`/messages/${contactId}`);
+  await sendMessage(message);
+  return redirect('/');
 }
 
 const msgComponents = {
@@ -26,17 +23,16 @@ const msgComponents = {
   image: DatabaseImage,
 };
 
-export default function ChatRoute() {
-  const { filteredMessages } = useLoaderData();
+export default function Chat() {
+  const { messages } = useLoaderData();
 
   useEffect(() => {
     document.getElementById('input').value = '';
-  }, [filteredMessages]);
-
+  }, [messages]);
   return (
     <>
       <div className="chatContainer">
-        {filteredMessages.map((msg) => {
+        {messages.map((msg) => {
           const MsgComponent = msgComponents[msg.type];
           return <MsgComponent key={msg.id} sender={msg.sender} text={msg.text} />;
         })}

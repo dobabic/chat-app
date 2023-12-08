@@ -12,7 +12,6 @@ export default function NewMessageForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newMessage === '') return;
-
     setNewMessage('');
   };
 

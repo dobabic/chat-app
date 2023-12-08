@@ -2,11 +2,10 @@ import React from 'react';
 import Chat from './Chat';
 import NewMessageForm from './NewMessageForm';
 
-export default function ChatWindow({ chatMsgs }) {
-  console.log(chatMsgs);
+export default function ChatWindow() {
   return (
     <>
-      <Chat messages={chatMsgs} />
+      <Chat />
       <NewMessageForm />
     </>
   );
