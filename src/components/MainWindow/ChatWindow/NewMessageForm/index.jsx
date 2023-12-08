@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { sendMessage } from 'Utilities';
-import './style.scss';
 import { storage } from 'Config';
+import { Form, redirect } from 'react-router-dom';
+import './style.scss';
 
 export default function NewMessageForm() {
   const [newMessage, setNewMessage] = useState('');
-  const [fileToUpload, setFileToUpload] = useState();
+  // const [fileToUpload, setFileToUpload] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newMessage === '') return;
 
-    sendMessage(newMessage);
     setNewMessage('');
   };
 
@@ -36,11 +36,11 @@ export default function NewMessageForm() {
 
   return (
     <div className="newMessageContainer">
-      <form onSubmit={handleSubmit}>
+      <Form method="post">
         <input
           placeholder="Type a message"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
+          name="newMessage"
+          onSubmit={handleSubmit}
         />
         <button type="submit">
           ✉️
@@ -49,7 +49,7 @@ export default function NewMessageForm() {
           <input id="uploadImage" type="file" onChange={(event) => setFileToUpload(event.target.files[0])} />
           <button type="button" onClick={handleUpload}>&#x1F4CE;</button>
         </label> */}
-      </form>
+      </Form>
     </div>
   );
 }

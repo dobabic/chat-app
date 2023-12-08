@@ -6,7 +6,6 @@ import Profile from './ProfileAndOptions/Profile';
 import Options from './ProfileAndOptions/Options';
 import ContactList from './ContactList';
 import ContactInfo from './ContactInfo';
-import NewMessageForm from './NewMessageForm';
 import LogoutButton from '../Buttons/LogoutButton';
 import './style.scss';
 
@@ -29,7 +28,6 @@ export default function MainWindow() {
           <Panel className="right-container" minSizePercentage={60}>
             <ContactInfo contact={selectedContact} />
             <Outlet />
-            <NewMessageForm />
           </Panel>
         </PanelGroup>
       </div>
