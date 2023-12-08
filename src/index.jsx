@@ -7,23 +7,25 @@ import {
 import { UserContextProvider } from 'Context/UserContext';
 import ChatRoute, {
   loader as chatLoader,
+  action as chatAction,
 } from './routes/chat';
+import ChatWindow from './components/MainWindow/ChatWindow';
 import Settings from './routes/settings';
 import Account from './routes/account';
 import App from './App';
 import './scss/style.scss';
-import Chat from './components/MainWindow/Chat';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
-      { index: true, element: <Chat /> },
+      { index: true, element: <ChatWindow /> },
       {
         path: '/messages/:contactId',
         element: <ChatRoute />,
         loader: chatLoader,
+        action: chatAction,
       },
     ],
   },

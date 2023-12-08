@@ -11,7 +11,9 @@ const msgComponents = {
   image: DatabaseImage,
 };
 
-export default function Chat() {
+export default function Chat({ chatMsgs }) {
+  console.log(chatMsgs, 'last');
+
   const [messages, setMessages] = useState([]);
 
   // Review useEffect and rework it - working in infinite loop
