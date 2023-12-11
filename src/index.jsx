@@ -8,7 +8,7 @@ import { UserContextProvider } from 'Context/UserContext';
 import ChatRoute, {
   loader as pvtChatLoader,
   action as pvtChatAction,
-} from './routes/chat';
+} from './routes/pvtChat';
 import Chat, {
   loader as mainChatLoader,
   action as mainChatAction,

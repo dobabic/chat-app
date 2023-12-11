@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Form, useLoaderData, redirect } from 'react-router-dom';
 import { getMessages, sendMessage } from 'Utilities';
+import { useAuth } from '../context/UserContext';
 import ChatMessage from '../components/MainWindow/ChatWindow/Chat/ChatMessage';
 import DatabaseImage from '../components/MainWindow/ChatWindow/Chat/DatabaseImage';
 import YoutubeEmbed from '../components/MainWindow/ChatWindow/Chat/YoutubeEmbed';
@@ -8,8 +9,7 @@ import '../components/MainWindow/ChatWindow/NewMessageForm/style.scss';
 
 export async function loader({ params }) {
   const messages = await getMessages();
-  const filteredMessages = messages.filter((msg) => msg.receiver === params.contactId);
-  return { filteredMessages };
+  return { messages, params };
 }
 
 export async function action({ request, params }) {
@@ -27,11 +27,13 @@ const msgComponents = {
 };
 
 export default function ChatRoute() {
-  const { filteredMessages } = useLoaderData();
+  const { messages, params } = useLoaderData();
+  const { currentUser } = useAuth();
+  const filteredMessages = messages.filter((msg) => msg.receiver === params.contactId && msg.sender === currentUser.uid);
 
   useEffect(() => {
     document.getElementById('input').value = '';
-  }, [filteredMessages]);
+  }, [messages]);
 
   return (
     <>

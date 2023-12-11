@@ -7,7 +7,8 @@ import YoutubeEmbed from '../components/MainWindow/ChatWindow/Chat/YoutubeEmbed'
 
 export async function loader() {
   const messages = await getMessages();
-  return { messages };
+  const filteredMessages = messages.filter((msg) => msg.receiver === null);
+  return { filteredMessages };
 }
 
 export async function action({ request }) {
@@ -24,15 +25,15 @@ const msgComponents = {
 };
 
 export default function Chat() {
-  const { messages } = useLoaderData();
+  const { filteredMessages } = useLoaderData();
 
   useEffect(() => {
     document.getElementById('input').value = '';
-  }, [messages]);
+  }, [filteredMessages]);
   return (
     <>
       <div className="chatContainer">
-        {messages.map((msg) => {
+        {filteredMessages.map((msg) => {
           const MsgComponent = msgComponents[msg.type];
           return <MsgComponent key={msg.id} sender={msg.sender} text={msg.text} />;
         })}
