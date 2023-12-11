@@ -26,7 +26,7 @@ export default function Chat() {
     <div className="chatContainer">
       {messages.map((msg) => {
         const MsgComponent = msgComponents[msg.type];
-        return <MsgComponent key={msg.id} uid={msg.uid} text={msg.text} />;
+        return <MsgComponent key={msg.id} sender={msg.sender} text={msg.text} />;
       })}
     </div>
   );

@@ -5,21 +5,35 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { UserContextProvider } from 'Context/UserContext';
+import ChatRoute, {
+  loader as pvtChatLoader,
+  action as pvtChatAction,
+} from './routes/pvtChat';
+import Chat, {
+  loader as mainChatLoader,
+  action as mainChatAction,
+} from './routes';
 import Settings from './routes/settings';
 import Account from './routes/account';
 import App from './App';
 import './scss/style.scss';
-import Chat from './components/MainWindow/Chat';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
-      { index: true, element: <Chat /> },
+      {
+        index: true,
+        element: <Chat />,
+        loader: mainChatLoader,
+        action: mainChatAction,
+      },
       {
         path: '/messages/:contactId',
-        element: <div>contactId</div>,
+        element: <ChatRoute />,
+        loader: pvtChatLoader,
+        action: pvtChatAction,
       },
     ],
   },

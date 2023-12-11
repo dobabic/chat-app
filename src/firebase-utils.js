@@ -15,7 +15,7 @@ export async function logOut() {
   return signOut(auth);
 }
 
-export async function sendMessage(newMessage) {
+export async function sendMessage(newMessage, receiverId) {
   const youtubeRegex = /^(?:https?:\/\/)?(?:(?:www\.)?youtube.com\/watch\?v=|youtu.be\/)([a-zA-Z0-9_-]{11})/;
   const firebaseRegex = /^(?:https?:\/\/)?(?:firebasestorage\.googleapis\.com)/;
   const { uid } = auth.currentUser;
@@ -30,7 +30,8 @@ export async function sendMessage(newMessage) {
     text: newMessage,
     createdAt: serverTimestamp(),
     type: determineMsgType(newMessage),
-    uid,
+    sender: uid,
+    receiver: receiverId || null,
   });
 }
 
