@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { Form, useLoaderData, redirect } from 'react-router-dom';
+import {
+  Form, useLoaderData, useOutletContext, redirect,
+} from 'react-router-dom';
 import { getMessages, sendMessage } from 'Utilities';
 import { useAuth } from '../context/UserContext';
-import ChatMessage from '../components/MainWindow/ChatWindow/Chat/ChatMessage';
-import DatabaseImage from '../components/MainWindow/ChatWindow/Chat/DatabaseImage';
-import YoutubeEmbed from '../components/MainWindow/ChatWindow/Chat/YoutubeEmbed';
-import '../components/MainWindow/ChatWindow/NewMessageForm/style.scss';
+import ChatMessage from '../components/MessageTypes/ChatMessage';
+import DatabaseImage from '../components/MessageTypes/DatabaseImage';
+import YoutubeEmbed from '../components/MessageTypes/YoutubeEmbed';
+import '../scss/style.scss';
 
 export async function loader({ params }) {
   const messages = await getMessages();
@@ -16,6 +18,7 @@ export async function action({ request, params }) {
   const { contactId } = params;
   const formData = await request.formData();
   const message = formData.get('newMessage');
+  if (message.trim() === '') return null;
   await sendMessage(message, contactId);
   return redirect(`/messages/${contactId}`);
 }
@@ -29,6 +32,8 @@ const msgComponents = {
 export default function ChatRoute() {
   const { messages, params } = useLoaderData();
   const { currentUser } = useAuth();
+  const selectedContact = useOutletContext();
+  const defaultImage = 'https://placehold.co/200x200';
   const filteredMessages = messages.filter((msg) => msg.receiver === params.contactId && msg.sender === currentUser.uid);
 
   useEffect(() => {
@@ -37,6 +42,19 @@ export default function ChatRoute() {
 
   return (
     <>
+      {selectedContact && (
+      <div className="contact-info">
+        <div className="contact-image">
+          <img
+            src={defaultImage}
+            alt="User Logo"
+          />
+        </div>
+        <div className="contact-name">
+          <span>{ selectedContact }</span>
+        </div>
+      </div>
+      )}
       <div className="chatContainer">
         {filteredMessages.map((msg) => {
           const MsgComponent = msgComponents[msg.type];

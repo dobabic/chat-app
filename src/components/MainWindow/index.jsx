@@ -5,7 +5,6 @@ import Header from './Header';
 import Profile from './ProfileAndOptions/Profile';
 import Options from './ProfileAndOptions/Options';
 import ContactList from './ContactList';
-import ContactInfo from './ContactInfo';
 import LogoutButton from '../Buttons/LogoutButton';
 import './style.scss';
 
@@ -26,8 +25,7 @@ export default function MainWindow() {
           </Panel>
           <PanelResizeHandle className="resizeHandler" />
           <Panel className="right-container" minSizePercentage={60}>
-            <ContactInfo contact={selectedContact} />
-            <Outlet />
+            <Outlet context={selectedContact} />
           </Panel>
         </PanelGroup>
       </div>

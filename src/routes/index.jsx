@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Form, redirect, useLoaderData } from 'react-router-dom';
 import { getMessages, sendMessage } from 'Utilities';
-import ChatMessage from '../components/MainWindow/ChatWindow/Chat/ChatMessage';
-import DatabaseImage from '../components/MainWindow/ChatWindow/Chat/DatabaseImage';
-import YoutubeEmbed from '../components/MainWindow/ChatWindow/Chat/YoutubeEmbed';
+import ChatMessage from '../components/MessageTypes/ChatMessage';
+import DatabaseImage from '../components/MessageTypes/DatabaseImage';
+import YoutubeEmbed from '../components/MessageTypes/YoutubeEmbed';
 
 export async function loader() {
   const messages = await getMessages();
@@ -14,6 +14,7 @@ export async function loader() {
 export async function action({ request }) {
   const formData = await request.formData();
   const message = formData.get('newMessage');
+  if (message.trim() === '') return null;
   await sendMessage(message);
   return redirect('/');
 }
