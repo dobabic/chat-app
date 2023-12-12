@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Form, redirect, useLoaderData } from 'react-router-dom';
 import { getMessages, sendMessage } from 'Utilities';
-import ChatMessage from '../components/MessageTypes/ChatMessage';
-import DatabaseImage from '../components/MessageTypes/DatabaseImage';
-import YoutubeEmbed from '../components/MessageTypes/YoutubeEmbed';
+import ChatMessage from 'MessageTypes/ChatMessage';
+import DatabaseImage from 'MessageTypes/DatabaseImage';
+import YoutubeEmbed from 'MessageTypes/YoutubeEmbed';
 
 export async function loader() {
   const messages = await getMessages();

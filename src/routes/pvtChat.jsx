@@ -3,10 +3,10 @@ import {
   Form, useLoaderData, useOutletContext, redirect,
 } from 'react-router-dom';
 import { getMessages, sendMessage } from 'Utilities';
+import YoutubeEmbed from 'MessageTypes/YoutubeEmbed';
+import ChatMessage from 'MessageTypes/ChatMessage';
+import DatabaseImage from 'MessageTypes/DatabaseImage';
 import { useAuth } from '../context/UserContext';
-import ChatMessage from '../components/MessageTypes/ChatMessage';
-import DatabaseImage from '../components/MessageTypes/DatabaseImage';
-import YoutubeEmbed from '../components/MessageTypes/YoutubeEmbed';
 import '../scss/style.scss';
 
 export async function loader({ params }) {
