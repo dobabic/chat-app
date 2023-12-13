@@ -32,6 +32,7 @@ module.exports = {
       Utilities: path.resolve(__dirname, 'src/firebase-utils'),
       Config: path.resolve('/firebase-config.js'),
       Assets: path.resolve(__dirname, '/src/assets'),
+      Routes: path.resolve(__dirname, 'src/routes'),
     },
     extensions: ['.js', '.jsx'],
   },
