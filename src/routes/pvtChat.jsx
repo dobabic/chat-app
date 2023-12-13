@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Form, useLoaderData } from 'react-router-dom';
 import {
-  Form, useLoaderData, useOutletContext,
-} from 'react-router-dom';
-import { getMessages, sendMessage, getMsgs } from 'Utilities';
+  getMessages, getContacts, sendMessage, getMsgs,
+} from 'Utilities';
 import YoutubeEmbed from 'MessageTypes/YoutubeEmbed';
 import ChatMessage from 'MessageTypes/ChatMessage';
 import DatabaseImage from 'MessageTypes/DatabaseImage';
@@ -11,7 +11,9 @@ import '../scss/style.scss';
 
 export async function loader({ params }) {
   const dbmessages = await getMessages();
-  return { dbmessages, params };
+  const contacts = await getContacts();
+  const currentContact = contacts.filter((obj) => obj.id === params.contactId)[0];
+  return { dbmessages, currentContact, params };
 }
 
 export async function action({ request, params }) {
@@ -30,14 +32,14 @@ const msgComponents = {
 };
 
 export default function ChatRoute() {
-  const { dbmessages, params } = useLoaderData();
+  const { dbmessages, currentContact, params } = useLoaderData();
   const [messages, setMessages] = useState(dbmessages);
   const { currentUser } = useAuth();
-  const selectedContact = useOutletContext();
   const input = useRef(null);
   const ref = useRef(null);
-  const defaultImage = 'https://placehold.co/200x200';
+  const selectedContact = currentContact.name;
   const filteredMessages = messages.filter((msg) => msg.receiver === params.contactId && msg.sender === currentUser.uid);
+  const defaultImage = 'https://placehold.co/200x200';
 
   useEffect(() => {
     getMsgs(setMessages);

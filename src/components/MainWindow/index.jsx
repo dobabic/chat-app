@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
@@ -9,8 +9,6 @@ import LogoutButton from '../Buttons/LogoutButton';
 import './style.scss';
 
 export default function MainWindow() {
-  const [selectedContact, setSelectedContact] = useState();
-
   return (
     <>
       <div className="main-container">
@@ -21,11 +19,11 @@ export default function MainWindow() {
               <Profile />
               <Options />
             </div>
-            <ContactList onContactClick={setSelectedContact} />
+            <ContactList />
           </Panel>
           <PanelResizeHandle className="resizeHandler" />
           <Panel className="right-container" minSizePercentage={60}>
-            <Outlet context={selectedContact} />
+            <Outlet />
           </Panel>
         </PanelGroup>
       </div>
