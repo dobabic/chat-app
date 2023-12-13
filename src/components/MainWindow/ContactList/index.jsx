@@ -15,7 +15,6 @@ function Contact({ contact, id, onClick }) {
       to={`messages/${id}`}
       className={({ isActive }) => (isActive ? 'active contact' : 'pending contact')}
       onClick={handleClick}
-      onKeyDown={handleClick}
     >
       <img
         src={contact.image || defaultImage}

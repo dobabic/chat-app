@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Form, useLoaderData } from 'react-router-dom';
-import { sendMessage, getMessages, getMsgs } from 'Utilities';
+import { getMessages, sendMessage, getMsgs } from 'Utilities';
 import ChatMessage from 'MessageTypes/ChatMessage';
 import DatabaseImage from 'MessageTypes/DatabaseImage';
 import YoutubeEmbed from 'MessageTypes/YoutubeEmbed';
 
 export async function loader() {
-  const messages = await getMessages();
-  const filteredMessages = messages.filter((msg) => msg.receiver === null);
-  return { filteredMessages };
+  const dbmessages = await getMessages();
+  return { dbmessages };
 }
 
 export async function action({ request }) {
@@ -26,19 +25,22 @@ const msgComponents = {
 };
 
 export default function Chat() {
-  const { filteredMessages } = useLoaderData();
-  const [messages, setMessages] = useState(filteredMessages);
+  const { dbmessages } = useLoaderData();
+  const [messages, setMessages] = useState(dbmessages);
   const input = useRef(null);
+  const ref = useRef(null);
+  const filteredMessages = messages.filter((msg) => msg.receiver === null);
 
   useEffect(() => {
     getMsgs(setMessages);
+    ref.current?.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     input.current.value = '';
   }, [messages.length]);
 
   return (
     <>
-      <div className="chatContainer">
-        {messages.map((msg) => {
+      <div className="chatContainer" ref={ref}>
+        {filteredMessages.map((msg) => {
           const MsgComponent = msgComponents[msg.type];
           return <MsgComponent key={msg.id} sender={msg.sender} text={msg.text} />;
         })}

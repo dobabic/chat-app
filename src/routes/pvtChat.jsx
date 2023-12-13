@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  Form, useLoaderData, useOutletContext, redirect,
+  Form, useLoaderData, useOutletContext,
 } from 'react-router-dom';
-import { getMessages, sendMessage } from 'Utilities';
+import { getMessages, sendMessage, getMsgs } from 'Utilities';
 import YoutubeEmbed from 'MessageTypes/YoutubeEmbed';
 import ChatMessage from 'MessageTypes/ChatMessage';
 import DatabaseImage from 'MessageTypes/DatabaseImage';
@@ -10,8 +10,8 @@ import { useAuth } from '../context/UserContext';
 import '../scss/style.scss';
 
 export async function loader({ params }) {
-  const messages = await getMessages();
-  return { messages, params };
+  const dbmessages = await getMessages();
+  return { dbmessages, params };
 }
 
 export async function action({ request, params }) {
@@ -20,7 +20,7 @@ export async function action({ request, params }) {
   const message = formData.get('newMessage');
   if (message.trim() === '') return null;
   await sendMessage(message, contactId);
-  return redirect(`/messages/${contactId}`);
+  return null;
 }
 
 const msgComponents = {
@@ -30,15 +30,20 @@ const msgComponents = {
 };
 
 export default function ChatRoute() {
-  const { messages, params } = useLoaderData();
+  const { dbmessages, params } = useLoaderData();
+  const [messages, setMessages] = useState(dbmessages);
   const { currentUser } = useAuth();
   const selectedContact = useOutletContext();
+  const input = useRef(null);
+  const ref = useRef(null);
   const defaultImage = 'https://placehold.co/200x200';
   const filteredMessages = messages.filter((msg) => msg.receiver === params.contactId && msg.sender === currentUser.uid);
 
   useEffect(() => {
-    document.getElementById('input').value = '';
-  }, [messages]);
+    getMsgs(setMessages);
+    ref.current?.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    input.current.value = '';
+  }, [messages.length]);
 
   return (
     <>
@@ -66,6 +71,7 @@ export default function ChatRoute() {
           <input
             id="input"
             placeholder="Type a message"
+            ref={input}
             name="newMessage"
           />
           <button type="submit">

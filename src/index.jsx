@@ -29,12 +29,12 @@ const router = createBrowserRouter([
         loader: mainChatLoader,
         action: mainChatAction,
       },
-      // {
-      //   path: '/messages/:contactId',
-      //   element: <ChatRoute />,
-      //   loader: pvtChatLoader,
-      //   action: pvtChatAction,
-      // },
+      {
+        path: '/messages/:contactId',
+        element: <ChatRoute />,
+        loader: pvtChatLoader,
+        action: pvtChatAction,
+      },
     ],
   },
   {
