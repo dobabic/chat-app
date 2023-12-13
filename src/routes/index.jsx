@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { Form, redirect, useLoaderData } from 'react-router-dom';
-import { getMessages, sendMessage } from 'Utilities';
+import React, { useEffect, useState, useRef } from 'react';
+import { Form, useLoaderData } from 'react-router-dom';
+import { sendMessage, getMessages, getMsgs } from 'Utilities';
 import ChatMessage from 'MessageTypes/ChatMessage';
 import DatabaseImage from 'MessageTypes/DatabaseImage';
 import YoutubeEmbed from 'MessageTypes/YoutubeEmbed';
@@ -16,7 +16,7 @@ export async function action({ request }) {
   const message = formData.get('newMessage');
   if (message.trim() === '') return null;
   await sendMessage(message);
-  return redirect('/');
+  return null;
 }
 
 const msgComponents = {
@@ -27,14 +27,18 @@ const msgComponents = {
 
 export default function Chat() {
   const { filteredMessages } = useLoaderData();
+  const [messages, setMessages] = useState(filteredMessages);
+  const input = useRef(null);
 
   useEffect(() => {
-    document.getElementById('input').value = '';
-  }, [filteredMessages]);
+    getMsgs(setMessages);
+    input.current.value = '';
+  }, [messages.length]);
+
   return (
     <>
       <div className="chatContainer">
-        {filteredMessages.map((msg) => {
+        {messages.map((msg) => {
           const MsgComponent = msgComponents[msg.type];
           return <MsgComponent key={msg.id} sender={msg.sender} text={msg.text} />;
         })}
@@ -44,6 +48,7 @@ export default function Chat() {
           <input
             id="input"
             placeholder="Type a message"
+            ref={input}
             name="newMessage"
           />
           <button type="submit">

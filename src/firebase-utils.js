@@ -6,6 +6,8 @@ import { db, auth, provider } from 'Config';
 
 const messagesRef = collection(db, 'messages');
 const contactRef = collection(db, 'contacts');
+const messagesQuery = query(messagesRef, orderBy('createdAt'));
+const contactsQuery = query(contactRef);
 
 export async function logIn() {
   return signInWithPopup(auth, provider);
@@ -51,11 +53,16 @@ export function getCollection(query) {
 }
 
 export async function getMessages() {
-  const messagesQuery = query(messagesRef, orderBy('createdAt'));
   return getCollection(messagesQuery);
 }
 
 export async function getContacts() {
-  const contactsQuery = query(contactRef);
   return getCollection(contactsQuery);
+}
+
+export function getMsgs(callback) {
+  return onSnapshot(messagesQuery, (snapshot) => {
+    const messages = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+    callback(messages);
+  });
 }
