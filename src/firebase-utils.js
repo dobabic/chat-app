@@ -6,6 +6,8 @@ import { db, auth, provider } from 'Config';
 
 const messagesRef = collection(db, 'messages');
 const contactRef = collection(db, 'contacts');
+const messagesQuery = query(messagesRef, orderBy('createdAt'));
+const contactsQuery = query(contactRef);
 
 export async function logIn() {
   return signInWithPopup(auth, provider);
@@ -15,7 +17,7 @@ export async function logOut() {
   return signOut(auth);
 }
 
-export async function sendMessage(newMessage) {
+export async function sendMessage(newMessage, receiverId) {
   const youtubeRegex = /^(?:https?:\/\/)?(?:(?:www\.)?youtube.com\/watch\?v=|youtu.be\/)([a-zA-Z0-9_-]{11})/;
   const firebaseRegex = /^(?:https?:\/\/)?(?:firebasestorage\.googleapis\.com)/;
   const { uid } = auth.currentUser;
@@ -30,7 +32,8 @@ export async function sendMessage(newMessage) {
     text: newMessage,
     createdAt: serverTimestamp(),
     type: determineMsgType(newMessage),
-    uid,
+    sender: uid,
+    receiver: receiverId || null,
   });
 }
 
@@ -50,11 +53,16 @@ export function getCollection(query) {
 }
 
 export async function getMessages() {
-  const messagesQuery = query(messagesRef, orderBy('createdAt'));
   return getCollection(messagesQuery);
 }
 
 export async function getContacts() {
-  const contactsQuery = query(contactRef);
   return getCollection(contactsQuery);
+}
+
+export function getMsgs(callback) {
+  return onSnapshot(messagesQuery, (snapshot) => {
+    const messages = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+    callback(messages);
+  });
 }
