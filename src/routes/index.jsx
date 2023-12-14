@@ -1,21 +1,21 @@
-import React, { useEffect } from 'react';
-import { Form, redirect, useLoaderData } from 'react-router-dom';
-import { getMessages, sendMessage } from 'Utilities';
-import ChatMessage from '../components/MainWindow/ChatWindow/Chat/ChatMessage';
-import DatabaseImage from '../components/MainWindow/ChatWindow/Chat/DatabaseImage';
-import YoutubeEmbed from '../components/MainWindow/ChatWindow/Chat/YoutubeEmbed';
+import React, { useEffect, useState, useRef } from 'react';
+import { Form, useLoaderData } from 'react-router-dom';
+import { getMessages, sendMessage, getMsgs } from 'Utilities';
+import ChatMessage from 'MessageTypes/ChatMessage';
+import DatabaseImage from 'MessageTypes/DatabaseImage';
+import YoutubeEmbed from 'MessageTypes/YoutubeEmbed';
 
 export async function loader() {
-  const messages = await getMessages();
-  const filteredMessages = messages.filter((msg) => msg.receiver === null);
-  return { filteredMessages };
+  const dbmessages = await getMessages();
+  return { dbmessages };
 }
 
 export async function action({ request }) {
   const formData = await request.formData();
   const message = formData.get('newMessage');
+  if (message.trim() === '') return null;
   await sendMessage(message);
-  return redirect('/');
+  return null;
 }
 
 const msgComponents = {
@@ -25,11 +25,18 @@ const msgComponents = {
 };
 
 export default function Chat() {
-  const { filteredMessages } = useLoaderData();
+  const { dbmessages } = useLoaderData();
+  const [messages, setMessages] = useState(dbmessages);
+  const input = useRef(null);
+  const ref = useRef(null);
+  const filteredMessages = messages.filter((msg) => msg.receiver === null);
 
   useEffect(() => {
-    document.getElementById('input').value = '';
-  }, [filteredMessages]);
+    getMsgs(setMessages);
+    ref.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    input.current.value = '';
+  }, [messages.length]);
+
   return (
     <>
       <div className="chatContainer">
@@ -37,12 +44,14 @@ export default function Chat() {
           const MsgComponent = msgComponents[msg.type];
           return <MsgComponent key={msg.id} sender={msg.sender} text={msg.text} />;
         })}
+        <div ref={ref} />
       </div>
       <div className="newMessageContainer">
         <Form method="post">
           <input
             id="input"
             placeholder="Type a message"
+            ref={input}
             name="newMessage"
           />
           <button type="submit">

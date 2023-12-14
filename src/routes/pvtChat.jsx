@@ -1,23 +1,28 @@
-import React, { useEffect } from 'react';
-import { Form, useLoaderData, redirect } from 'react-router-dom';
-import { getMessages, sendMessage } from 'Utilities';
+import React, { useEffect, useRef, useState } from 'react';
+import { Form, useLoaderData } from 'react-router-dom';
+import {
+  getMessages, getContacts, sendMessage, getMsgs,
+} from 'Utilities';
+import YoutubeEmbed from 'MessageTypes/YoutubeEmbed';
+import ChatMessage from 'MessageTypes/ChatMessage';
+import DatabaseImage from 'MessageTypes/DatabaseImage';
 import { useAuth } from '../context/UserContext';
-import ChatMessage from '../components/MainWindow/ChatWindow/Chat/ChatMessage';
-import DatabaseImage from '../components/MainWindow/ChatWindow/Chat/DatabaseImage';
-import YoutubeEmbed from '../components/MainWindow/ChatWindow/Chat/YoutubeEmbed';
-import '../components/MainWindow/ChatWindow/NewMessageForm/style.scss';
+import '../scss/style.scss';
 
 export async function loader({ params }) {
-  const messages = await getMessages();
-  return { messages, params };
+  const dbmessages = await getMessages();
+  const contacts = await getContacts();
+  const currentContact = contacts.filter((obj) => obj.id === params.contactId)[0];
+  return { dbmessages, currentContact, params };
 }
 
 export async function action({ request, params }) {
   const { contactId } = params;
   const formData = await request.formData();
   const message = formData.get('newMessage');
+  if (message.trim() === '') return null;
   await sendMessage(message, contactId);
-  return redirect(`/messages/${contactId}`);
+  return null;
 }
 
 const msgComponents = {
@@ -27,16 +32,36 @@ const msgComponents = {
 };
 
 export default function ChatRoute() {
-  const { messages, params } = useLoaderData();
+  const { dbmessages, currentContact, params } = useLoaderData();
+  const [messages, setMessages] = useState(dbmessages);
   const { currentUser } = useAuth();
+  const input = useRef(null);
+  const ref = useRef(null);
+  const selectedContact = currentContact.name;
   const filteredMessages = messages.filter((msg) => msg.receiver === params.contactId && msg.sender === currentUser.uid);
+  const defaultImage = 'https://placehold.co/200x200';
 
   useEffect(() => {
-    document.getElementById('input').value = '';
-  }, [messages]);
+    getMsgs(setMessages);
+    ref.current?.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    input.current.value = '';
+  }, [messages.length]);
 
   return (
     <>
+      {selectedContact && (
+      <div className="contact-info">
+        <div className="contact-image">
+          <img
+            src={defaultImage}
+            alt="User Logo"
+          />
+        </div>
+        <div className="contact-name">
+          <span>{ selectedContact }</span>
+        </div>
+      </div>
+      )}
       <div className="chatContainer">
         {filteredMessages.map((msg) => {
           const MsgComponent = msgComponents[msg.type];
@@ -48,6 +73,7 @@ export default function ChatRoute() {
           <input
             id="input"
             placeholder="Type a message"
+            ref={input}
             name="newMessage"
           />
           <button type="submit">
