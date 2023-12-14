@@ -33,17 +33,18 @@ export default function Chat() {
 
   useEffect(() => {
     getMsgs(setMessages);
-    ref.current?.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    ref.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     input.current.value = '';
   }, [messages.length]);
 
   return (
     <>
-      <div className="chatContainer" ref={ref}>
+      <div className="chatContainer">
         {filteredMessages.map((msg) => {
           const MsgComponent = msgComponents[msg.type];
           return <MsgComponent key={msg.id} sender={msg.sender} text={msg.text} />;
         })}
+        <div ref={ref} />
       </div>
       <div className="newMessageContainer">
         <Form method="post">
