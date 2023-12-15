@@ -5,7 +5,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { UserContextProvider } from 'Context/UserContext';
-import ChatRoute, {
+import PvtChat, {
   loader as pvtChatLoader,
   action as pvtChatAction,
 } from './routes/pvtChat';
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/messages/:contactId',
-        element: <ChatRoute />,
+        element: <PvtChat />,
         loader: pvtChatLoader,
         action: pvtChatAction,
       },

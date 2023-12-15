@@ -104,7 +104,8 @@ body {
             opacity: 0;
         }
     
-        button {
+        button, label {
+            display: inline-block;
             height: 2rem;
             width: 2rem;
             cursor: pointer;

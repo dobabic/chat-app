@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Form, useLoaderData } from 'react-router-dom';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import {
   getMessages, getContacts, sendMessage, getMsgs,
 } from 'Utilities';
+import { storage } from 'Config';
 import YoutubeEmbed from 'MessageTypes/YoutubeEmbed';
 import ChatMessage from 'MessageTypes/ChatMessage';
 import DatabaseImage from 'MessageTypes/DatabaseImage';
@@ -31,21 +33,37 @@ const msgComponents = {
   image: DatabaseImage,
 };
 
-export default function ChatRoute() {
+export default function PvtChat() {
+  const { currentUser } = useAuth();
   const { dbmessages, currentContact, params } = useLoaderData();
   const [messages, setMessages] = useState(dbmessages);
-  const { currentUser } = useAuth();
   const input = useRef(null);
-  const ref = useRef(null);
+  const div = useRef(null);
   const selectedContact = currentContact.name;
   const filteredMessages = messages.filter((msg) => msg.receiver === params.contactId && msg.sender === currentUser.uid);
   const defaultImage = 'https://placehold.co/200x200';
 
+  function handleUpload(file) {
+    const fileToUpload = file;
+    const imagesRef = ref(storage, `images/${fileToUpload.name}`);
+    uploadBytes(imagesRef, fileToUpload)
+      .then((data) => {
+        getDownloadURL(data.ref)
+          .then((d) => sendMessage(d, params.contactId))
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     getMsgs(setMessages);
-    ref.current?.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    div.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     input.current.value = '';
-  }, [messages.length]);
+  }, [messages.length, params.contactId]);
 
   return (
     <>
@@ -67,6 +85,7 @@ export default function ChatRoute() {
           const MsgComponent = msgComponents[msg.type];
           return <MsgComponent key={msg.id} sender={msg.sender} text={msg.text} />;
         })}
+        <div ref={div} />
       </div>
       <div className="newMessageContainer">
         <Form method="post">
@@ -79,6 +98,10 @@ export default function ChatRoute() {
           <button type="submit">
             ✉️
           </button>
+          <label htmlFor="uploadImage" className="upload-label">
+            <input id="uploadImage" type="file" onChange={(event) => handleUpload(event.target.files[0])} />
+            &#x1F4CE;
+          </label>
         </Form>
       </div>
     </>
