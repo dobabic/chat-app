@@ -3,12 +3,18 @@
 a {
     text-decoration: none;
     color: black;
-}
 
-img {
+    img {
     height: 40px;
     width: 40px;
     border-radius: 50%;
+    }
+
+    span {
+        @include boxSize(100%, 100%);
+        display: flex;
+        align-items: center;
+    }
 }
 
 .contact {
@@ -21,12 +27,6 @@ img {
     
     &:hover {
         background-color: $hover-color;
-    }
-    
-    > span {
-        @include boxSize(100%, 100%);
-        display: flex;
-        align-items: center;
     }
 }
 

@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Form, useLoaderData } from 'react-router-dom';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getMessages, sendMessage, getMsgs } from 'Utilities';
+import { storage } from 'Config';
 import ChatMessage from 'MessageTypes/ChatMessage';
 import DatabaseImage from 'MessageTypes/DatabaseImage';
 import YoutubeEmbed from 'MessageTypes/YoutubeEmbed';
@@ -28,12 +30,28 @@ export default function Chat() {
   const { dbmessages } = useLoaderData();
   const [messages, setMessages] = useState(dbmessages);
   const input = useRef(null);
-  const ref = useRef(null);
+  const div = useRef(null);
   const filteredMessages = messages.filter((msg) => msg.receiver === null);
+
+  function handleUpload(file) {
+    const fileToUpload = file;
+    const imagesRef = ref(storage, `images/${fileToUpload.name}`);
+    uploadBytes(imagesRef, fileToUpload)
+      .then((data) => {
+        getDownloadURL(data.ref)
+          .then((d) => sendMessage(d))
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   useEffect(() => {
     getMsgs(setMessages);
-    ref.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    div.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     input.current.value = '';
   }, [messages.length]);
 
@@ -44,7 +62,7 @@ export default function Chat() {
           const MsgComponent = msgComponents[msg.type];
           return <MsgComponent key={msg.id} sender={msg.sender} text={msg.text} />;
         })}
-        <div ref={ref} />
+        <div ref={div} />
       </div>
       <div className="newMessageContainer">
         <Form method="post">
@@ -57,6 +75,10 @@ export default function Chat() {
           <button type="submit">
             ✉️
           </button>
+          <label htmlFor="uploadImage" className="upload-label">
+            <input id="uploadImage" type="file" onChange={(event) => handleUpload(event.target.files[0])} />
+            &#x1F4CE;
+          </label>
         </Form>
       </div>
     </>
