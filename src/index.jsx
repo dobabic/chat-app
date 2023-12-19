@@ -13,6 +13,9 @@ import Chat, {
   loader as mainChatLoader,
   action as mainChatAction,
 } from './routes';
+import AddContact, {
+  action as addContactAction,
+} from './routes/addContact';
 import Settings from './routes/settings';
 import Account from './routes/account';
 import App from './App';
@@ -35,15 +38,20 @@ const router = createBrowserRouter([
         loader: pvtChatLoader,
         action: pvtChatAction,
       },
+      {
+        path: '/addContact',
+        element: <AddContact />,
+        action: addContactAction,
+      },
+      {
+        path: '/settings',
+        element: <Settings />,
+      },
+      {
+        path: '/settings/account',
+        element: <Account />,
+      },
     ],
-  },
-  {
-    path: '/settings',
-    element: <Settings />,
-  },
-  {
-    path: '/settings/account',
-    element: <Account />,
   },
 ]);
 

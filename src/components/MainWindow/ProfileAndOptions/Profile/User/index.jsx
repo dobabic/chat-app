@@ -1,7 +1,6 @@
 import React from 'react';
 import './style.scss';
 import { useAuth } from 'Context/UserContext';
-import { Link } from 'react-router-dom';
 import skype from 'Assets/skype.svg';
 import Tab from '../../Options/Tab';
 
@@ -19,12 +18,8 @@ export default function User() {
         <span className="user-name">{currentUser.displayName}</span>
       </div>
       <div className="links">
-        <Link to="/settings">
-          <Tab imgSrc={skype} name="Settings" />
-        </Link>
-        <Link to="/settings/account">
-          <Tab imgSrc={skype} name="Account" />
-        </Link>
+        <Tab to="/settings" imgSrc={skype} name="Settings" />
+        <Tab to="/settings/account" imgSrc={skype} name="Account" />
       </div>
     </div>
   );

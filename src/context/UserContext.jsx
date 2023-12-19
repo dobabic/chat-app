@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from 'Config';
+import { addUserToDbOnLogin } from '../firebase-utils';
 
 // 1. Create context
 const UserContext = createContext();
@@ -20,6 +21,8 @@ export function UserContextProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
+        console.log(`Your userID is: ${user.uid}`);
+        addUserToDbOnLogin(user);
       } else {
         console.log(`User: ${null}`);
       }

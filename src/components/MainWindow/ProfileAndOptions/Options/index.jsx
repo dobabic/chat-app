@@ -11,8 +11,8 @@ export default function TabsAndDropdowns() {
   return (
     <div className="options">
       <div className="tabs-container">
-        <Tab imgSrc={chat} name="Chats" />
-        <Tab imgSrc={contact} name="Calls" />
+        <Tab to="/addContact" imgSrc={contact} name="Add Contact" />
+        <Tab imgSrc={chat} name="Calls" />
         <Tab imgSrc={search} name="Contacts" />
         <Tab imgSrc={skype} name="Today" />
       </div>

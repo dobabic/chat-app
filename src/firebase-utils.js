@@ -1,5 +1,5 @@
 import {
-  addDoc, collection, serverTimestamp, onSnapshot, query, orderBy,
+  doc, setDoc, addDoc, getDoc, collection, serverTimestamp, onSnapshot, query, orderBy,
 } from 'firebase/firestore';
 import { signInWithPopup, signOut } from 'firebase/auth';
 import { db, auth, provider } from 'Config';
@@ -58,6 +58,18 @@ export async function getMessages() {
 
 export async function getContacts() {
   return getCollection(contactsQuery);
+}
+
+export async function addUserToDbOnLogin(user) {
+  const docRef = doc(db, 'contacts', user.uid);
+  const docSnap = await getDoc(docRef);
+
+  if (!docSnap.exists()) {
+    await setDoc(doc(db, 'contacts', user.uid), {
+      name: user.displayName,
+      addedBy: [],
+    });
+  }
 }
 
 export function getMsgs(callback) {
