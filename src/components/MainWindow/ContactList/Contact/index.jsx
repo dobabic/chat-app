@@ -5,6 +5,11 @@ import './style.scss';
 const defaultImage = 'https://placehold.co/200x200';
 
 export default function Contact({ contact, id }) {
+  function handleClick(e) {
+    e.preventDefault();
+    // deleteContact();
+  }
+
   return (
     <NavLink
       to={`messages/${id}`}
@@ -15,6 +20,7 @@ export default function Contact({ contact, id }) {
         alt="Contact Logo"
       />
       <span>{contact}</span>
+      <button type="button" onClick={handleClick}>&#x274c;</button>
     </NavLink>
   );
 }

@@ -1,5 +1,6 @@
 import {
-  doc, setDoc, addDoc, getDoc, collection, serverTimestamp, onSnapshot, query, orderBy,
+  doc, setDoc, addDoc, getDoc, updateDoc, collection, serverTimestamp, onSnapshot,
+  query, orderBy, arrayUnion,
 } from 'firebase/firestore';
 import { signInWithPopup, signOut } from 'firebase/auth';
 import { db, auth, provider } from 'Config';
@@ -15,6 +16,27 @@ export async function logIn() {
 
 export async function logOut() {
   return signOut(auth);
+}
+
+export async function addUserOnLogin(user) {
+  const docRef = doc(db, 'contacts', user.uid);
+  const docSnap = await getDoc(docRef);
+
+  if (!docSnap.exists()) {
+    await setDoc(doc(db, 'contacts', user.uid), {
+      name: user.displayName,
+      uid: user.uid,
+      contacts: [],
+    });
+  }
+}
+
+export async function addContact(updates) {
+  const docRef = doc(db, 'contacts', `${updates.currentUser}`);
+
+  await updateDoc(docRef, {
+    contacts: arrayUnion(`${updates.newContactId}`),
+  });
 }
 
 export async function sendMessage(newMessage, receiverId) {
@@ -56,25 +78,28 @@ export async function getMessages() {
   return getCollection(messagesQuery);
 }
 
-export async function getContacts() {
+export async function getUsers() {
   return getCollection(contactsQuery);
 }
 
-export async function addUserToDbOnLogin(user) {
-  const docRef = doc(db, 'contacts', user.uid);
-  const docSnap = await getDoc(docRef);
-
-  if (!docSnap.exists()) {
-    await setDoc(doc(db, 'contacts', user.uid), {
-      name: user.displayName,
-      addedBy: [],
-    });
-  }
+export function getUserContacts(userId, callback) {
+  const docRef = doc(db, 'contacts', `${userId}`);
+  onSnapshot(docRef, (doc) => {
+    const data = doc.data();
+    callback(data.contacts);
+  });
 }
 
 export function getMsgs(callback) {
   return onSnapshot(messagesQuery, (snapshot) => {
     const messages = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     callback(messages);
+  });
+}
+
+export function getContacts(callback) {
+  onSnapshot(contactsQuery, (snapshot) => {
+    const contacts = snapshot.docs.map((doc) => ({ ...doc.data() }));
+    callback(contacts);
   });
 }

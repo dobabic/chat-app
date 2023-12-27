@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Form, useLoaderData } from 'react-router-dom';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import {
-  getMessages, getContacts, sendMessage, getMsgs,
+  getMessages, getUsers, sendMessage, getMsgs,
 } from 'Utilities';
 import { storage } from 'Config';
 import YoutubeEmbed from 'MessageTypes/YoutubeEmbed';
@@ -13,8 +13,8 @@ import '../scss/style.scss';
 
 export async function loader({ params }) {
   const dbmessages = await getMessages();
-  const contacts = await getContacts();
-  const currentContact = contacts.filter((obj) => obj.id === params.contactId)[0];
+  const contacts = await getUsers();
+  const currentContact = contacts.find((obj) => obj.id === params.contactId);
   return { dbmessages, currentContact, params };
 }
 
@@ -34,13 +34,15 @@ const msgComponents = {
 };
 
 export default function PvtChat() {
-  const { currentUser } = useAuth();
   const { dbmessages, currentContact, params } = useLoaderData();
   const [messages, setMessages] = useState(dbmessages);
+  const { currentUser } = useAuth();
   const input = useRef(null);
   const div = useRef(null);
+
   const selectedContact = currentContact.name;
-  const filteredMessages = messages.filter((msg) => msg.receiver === params.contactId && msg.sender === currentUser.uid);
+  const filteredMessages = messages.filter((msg) => (msg.receiver === params.contactId && msg.sender === currentUser.uid)
+    || (msg.sender === params.contactId && msg.receiver === currentUser.uid));
   const defaultImage = 'https://placehold.co/200x200';
 
   function handleUpload(file) {
