@@ -1,6 +1,6 @@
 import {
   doc, setDoc, addDoc, getDoc, updateDoc, collection, serverTimestamp, onSnapshot,
-  query, orderBy, arrayUnion,
+  query, orderBy, arrayUnion, arrayRemove,
 } from 'firebase/firestore';
 import { signInWithPopup, signOut } from 'firebase/auth';
 import { db, auth, provider } from 'Config';
@@ -36,6 +36,14 @@ export async function addContact(updates) {
 
   await updateDoc(docRef, {
     contacts: arrayUnion(`${updates.newContactId}`),
+  });
+}
+
+export async function deleteContact(id, uid) {
+  const docRef = doc(db, 'contacts', `${uid}`);
+
+  await updateDoc(docRef, {
+    contacts: arrayRemove(`${id}`),
   });
 }
 
