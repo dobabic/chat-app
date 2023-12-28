@@ -13,6 +13,7 @@ import Chat, {
   loader as mainChatLoader,
   action as mainChatAction,
 } from './routes';
+import CreateGroup from './routes/createGroup';
 import AddContact, {
   action as addContactAction,
 } from './routes/addContact';
@@ -37,6 +38,11 @@ const router = createBrowserRouter([
         element: <PvtChat />,
         loader: pvtChatLoader,
         action: pvtChatAction,
+      },
+      {
+        path: '/createGroup',
+        element: <CreateGroup />,
+        // action: ,
       },
       {
         path: '/addContact',

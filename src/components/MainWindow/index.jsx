@@ -14,7 +14,7 @@ export default function MainWindow() {
       <div className="main-container">
         <Header />
         <PanelGroup direction="horizontal">
-          <Panel className="left-container" minSizePercentage={20} defaultSizePercentage={25}>
+          <Panel className="left-container" minSizePercentage={25} defaultSizePercentage={25}>
             <div className="profileAndOptions">
               <Profile />
               <Options />

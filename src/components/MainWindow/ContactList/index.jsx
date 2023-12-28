@@ -11,12 +11,10 @@ export default function ContactList() {
 
   useEffect(() => {
     getContacts(setUsers);
-    console.log('1st uE');
   }, [users.length]);
 
   useEffect(() => {
     getUserContacts(currentUser.uid, setUserContacts);
-    console.log('2st uE');
   }, [userContacts.length]);
 
   return (

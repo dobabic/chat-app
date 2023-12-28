@@ -12,9 +12,9 @@ export default function TabsAndDropdowns() {
     <div className="options">
       <div className="tabs-container">
         <Tab to="/addContact" imgSrc={contact} name="Add Contact" />
-        <Tab imgSrc={chat} name="Create Group" />
-        <Tab imgSrc={search} name="Contacts" />
-        <Tab imgSrc={skype} name="Today" />
+        <Tab to="/createGroup" imgSrc={chat} name="Create Group" />
+        <Tab imgSrc={search} name="Join Group" />
+        <Tab imgSrc={skype} name="Join Channel" />
       </div>
       <div className="dropdowns-container">
         <Dropdown imgSrc={chat} text="Meet Now" />
