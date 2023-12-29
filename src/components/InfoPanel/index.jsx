@@ -1,4 +1,5 @@
 import React from 'react';
+import './style.scss';
 
 export default function InfoPanel(props) {
   const image = props.image || 'https://placehold.co/200x200';

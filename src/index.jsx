@@ -9,11 +9,13 @@ import PvtChat, {
   loader as pvtChatLoader,
   action as pvtChatAction,
 } from './routes/pvtChat';
-import Chat, {
+import MainChat, {
   loader as mainChatLoader,
   action as mainChatAction,
-} from './routes';
-import CreateGroup from './routes/createGroup';
+} from './routes/MainChat';
+import CreateGroup, {
+  action as createGroupAction,
+} from './routes/createGroup';
 import AddContact, {
   action as addContactAction,
 } from './routes/addContact';
@@ -29,7 +31,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Chat />,
+        element: <MainChat />,
         loader: mainChatLoader,
         action: mainChatAction,
       },
@@ -42,7 +44,7 @@ const router = createBrowserRouter([
       {
         path: '/createGroup',
         element: <CreateGroup />,
-        // action: ,
+        action: createGroupAction,
       },
       {
         path: '/addContact',

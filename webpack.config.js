@@ -33,7 +33,7 @@ module.exports = {
       Config: path.resolve('/firebase-config.js'),
       Assets: path.resolve(__dirname, 'src/assets'),
       Routes: path.resolve(__dirname, 'src/routes'),
-      MessageTypes: path.resolve(__dirname, 'src/components/MessageTypes'),
+      MessageTypes: path.resolve(__dirname, 'src/components/Chatter/MessageTypes'),
     },
     extensions: ['.js', '.jsx'],
   },

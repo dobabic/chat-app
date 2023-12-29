@@ -7,6 +7,7 @@ import { db, auth, provider } from 'Config';
 
 const messagesRef = collection(db, 'messages');
 const contactRef = collection(db, 'contacts');
+const groupsRef = collection(db, 'groups');
 const messagesQuery = query(messagesRef, orderBy('createdAt'));
 const contactsQuery = query(contactRef);
 
@@ -31,20 +32,30 @@ export async function addUserOnLogin(user) {
   }
 }
 
-export async function addContact(updates) {
-  const docRef = doc(db, 'contacts', `${updates.currentUser}`);
+export async function addContact(data) {
+  const docRef = doc(db, 'contacts', `${data.currentUser}`);
 
   await updateDoc(docRef, {
-    contacts: arrayUnion(`${updates.newContactId}`),
+    contacts: arrayUnion(`${data.newContactId}`),
   });
 }
 
-export async function deleteContact(id, uid) {
-  const docRef = doc(db, 'contacts', `${uid}`);
+export async function deleteContact(id, currentUserId) {
+  const docRef = doc(db, 'contacts', `${currentUserId}`);
 
   await updateDoc(docRef, {
     contacts: arrayRemove(`${id}`),
   });
+}
+
+export async function createGroup(data) {
+  const { groupName, currentUser } = data;
+  const promise = await addDoc(groupsRef, {
+    name: groupName,
+    admin: currentUser,
+    members: [currentUser],
+  });
+  return promise;
 }
 
 export async function sendMessage(newMessage, receiverId) {
