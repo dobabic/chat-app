@@ -1,19 +1,23 @@
+@import '../../../../../scss/config';
+
 .tab {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-grow: 1;
-
-    img {
-        width: 25px;
-        height: 25px;
-        border-radius: 0;
-        margin: 5px 0;
-        cursor: pointer;
-    }
-
-    p {
-        text-align: center;
-        font-size: 10px;
+    
+    a{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+        img {
+            width: 25px;
+            height: 25px;
+            border-radius: 0;
+            cursor: pointer;
+        }
+        
+        p {
+            font-size: 12px;
+        }
     }
 }

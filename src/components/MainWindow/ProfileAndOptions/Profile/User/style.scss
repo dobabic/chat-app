@@ -3,31 +3,33 @@
 .user-container {
     @include boxSize(50%, 100%);
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
-
-
+    
     .user-image {
-        @include boxSize(80%, 20%);
-        margin-left: 5px;
-        
+        @include boxSize(40px, 40px);
+        display: flex;
+        margin: 0 10px;
+
         img {
             max-width:100%;
             max-height:100%;
             border-radius: 50%;
         }
     }
-
+    
     .user-info {
         @include boxSize(100%, 40%);
         display: flex;
+        flex-grow: 1;
         align-items: center;
     }
 
     .links {
+        @include boxSize(100%, 25%);
         display: flex;
-        justify-content: space-around;
         flex-grow: 1;
+        justify-content: space-around;
 
         a {
             text-decoration: none;

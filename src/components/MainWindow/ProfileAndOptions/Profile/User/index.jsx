@@ -1,7 +1,8 @@
 import React from 'react';
 import './style.scss';
 import { useAuth } from 'Context/UserContext';
-import skype from 'Assets/skype.svg';
+import cog from 'Assets/setting.svg';
+import account from 'Assets/account.svg';
 import Tab from '../../Options/Tab';
 
 const defaultImage = 'https://placehold.co/200x200';
@@ -18,8 +19,8 @@ export default function User() {
         <span className="user-name">{currentUser.displayName}</span>
       </div>
       <div className="links">
-        <Tab to="/settings" imgSrc={skype} name="Settings" />
-        <Tab to="/settings/account" imgSrc={skype} name="Account" />
+        <Tab to="/settings" imgSrc={cog} name="Settings" />
+        <Tab to="/settings/account" imgSrc={account} name="Account" />
       </div>
     </div>
   );

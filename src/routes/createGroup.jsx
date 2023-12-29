@@ -6,7 +6,7 @@ import { createGroup } from '../firebase-utils';
 export async function action({ request }) {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-  createGroup(data) // addDoc
+  createGroup(data)
     .then((d) => console.log(d.id));
   return redirect('/');
 }

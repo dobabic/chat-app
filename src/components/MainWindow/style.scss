@@ -22,7 +22,12 @@
         flex-direction: column;
 
         .profileAndOptions {
-            @include boxSize(50%, 100%);
+            @include boxSize(30%, 100%);
+        }
+
+        .contactList {
+            @include boxSize(70%, 100%);
+            overflow: auto;
         }
     }
 

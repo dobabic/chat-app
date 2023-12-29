@@ -50,12 +50,11 @@ export async function deleteContact(id, currentUserId) {
 
 export async function createGroup(data) {
   const { groupName, currentUser } = data;
-  const promise = await addDoc(groupsRef, {
+  return addDoc(groupsRef, {
     name: groupName,
     admin: currentUser,
     members: [currentUser],
   });
-  return promise;
 }
 
 export async function sendMessage(newMessage, receiverId) {
