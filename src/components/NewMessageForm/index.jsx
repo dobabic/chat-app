@@ -36,7 +36,7 @@ export default function NewMessageForm({ contactId, msgLength }) {
         name="newMessage"
       />
       <button type="submit">
-        ✉️
+        &#x2709;
       </button>
       <label htmlFor="uploadImage" className="upload-label">
         <input id="uploadImage" type="file" onChange={(event) => handleUpload(event.target.files[0])} />

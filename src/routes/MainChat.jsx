@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Form, useLoaderData } from 'react-router-dom';
-import { getMessages, sendMessage, getMsgs } from 'Utilities';
+import { Form } from 'react-router-dom';
+import { sendMessage, getMessages } from 'Utilities';
 import NewMessageForm from '../components/NewMessageForm';
 import Chat from '../components/Chat';
-
-export async function loader() {
-  const dbmessages = await getMessages();
-  return { dbmessages };
-}
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -18,12 +13,11 @@ export async function action({ request }) {
 }
 
 export default function MainChat() {
-  const { dbmessages } = useLoaderData();
-  const [messages, setMessages] = useState(dbmessages);
+  const [messages, setMessages] = useState([]);
   const filteredMessages = messages.filter((msg) => msg.receiver === null);
 
   useEffect(() => {
-    getMsgs(setMessages);
+    getMessages(setMessages);
   }, [messages.length]);
 
   return (

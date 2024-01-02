@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Form, useLoaderData } from 'react-router-dom';
 import {
-  getMessages, getUsers, sendMessage, getMsgs,
+  getMessages, sendMessage, getDocumentById,
 } from 'Utilities';
 import { useAuth } from '../context/UserContext';
 import InfoPanel from '../components/InfoPanel';
@@ -10,10 +10,7 @@ import NewMessageForm from '../components/NewMessageForm';
 import '../scss/style.scss';
 
 export async function loader({ params }) {
-  const dbmessages = await getMessages();
-  const contacts = await getUsers();
-  const currentContact = contacts.find((obj) => obj.id === params.contactId);
-  return { dbmessages, currentContact, params };
+  return { params };
 }
 
 export async function action({ request, params }) {
@@ -26,22 +23,24 @@ export async function action({ request, params }) {
 }
 
 export default function PvtChat() {
-  const { dbmessages, currentContact, params } = useLoaderData();
-  const [messages, setMessages] = useState(dbmessages);
+  const [messages, setMessages] = useState([]);
+  const [contact, setContact] = useState();
   const { currentUser } = useAuth();
+  const { params } = useLoaderData();
   const { contactId } = params;
-  const selectedContact = currentContact.name;
   const filteredMessages = messages.filter((msg) => (msg.receiver === contactId && msg.sender === currentUser.uid)
     || (msg.sender === contactId && msg.receiver === currentUser.uid));
 
   useEffect(() => {
-    getMsgs(setMessages);
+    getMessages(setMessages);
+    getDocumentById(contactId)
+      .then((user) => setContact(user));
   }, [messages.length, contactId]);
 
   return (
     <>
-      {selectedContact
-        && <InfoPanel name={selectedContact} />}
+      {contact
+        && <InfoPanel contact={contact} />}
       <div className="chatContainer">
         <Chat messages={filteredMessages} />
       </div>

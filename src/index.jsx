@@ -10,7 +10,6 @@ import PvtChat, {
   action as pvtChatAction,
 } from './routes/pvtChat';
 import MainChat, {
-  loader as mainChatLoader,
   action as mainChatAction,
 } from './routes/MainChat';
 import CreateGroup, {
@@ -32,7 +31,6 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <MainChat />,
-        loader: mainChatLoader,
         action: mainChatAction,
       },
       {

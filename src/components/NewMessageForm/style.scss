@@ -28,9 +28,8 @@
         }
 
         button, label {
+            @include boxSize(100%, 2rem);
             display: inline-block;
-            height: 2rem;
-            width: 2rem;
             cursor: pointer;
             border: white;
             border-radius: 20px;

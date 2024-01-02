@@ -1,25 +1,31 @@
 import React from 'react';
 import './style.scss';
+import { useAuth } from 'Context/UserContext';
+import AdminControls from './AdminControls';
+import Controls from './Controls';
 
-export default function InfoPanel(props) {
-  const image = props.image || 'https://placehold.co/200x200';
-  const { name } = props;
+export default function InfoPanel({ contact }) {
+  const { currentUser } = useAuth();
+  const groupAdmin = contact.admin;
+  const controlsRender = currentUser.uid === groupAdmin ? <AdminControls /> : <Controls />;
+  const image = contact.image || 'https://placehold.co/200x200';
+  const { name } = contact;
 
   return (
-
-    <div className="contact-info">
-      <div className="contact-image">
-        <img
-          src={image}
-          alt="User Logo"
-        />
-      </div>
-      <div className="contact-name">
+    <div className="container">
+      <div className="contact-info">
+        {!groupAdmin
+          && (
+          <img
+            src={image}
+            alt="User Logo"
+          />
+          )}
         <span>{name}</span>
       </div>
+      {groupAdmin
+        ? controlsRender
+        : null}
     </div>
-
   );
 }
-
-// dodati group & channel content (add, remove member), (leave, delete group)
