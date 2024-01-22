@@ -18,7 +18,7 @@ export default function User() {
       <div className="user-info">
         <span className="user-name">{currentUser.displayName}</span>
       </div>
-      <div className="links">
+      <div className="user-options">
         <Tab to="/settings" imgSrc={cog} name="Settings" />
         <Tab to="/settings/account" imgSrc={account} name="Account" />
       </div>

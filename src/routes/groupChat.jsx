@@ -3,51 +3,46 @@ import { Form, useLoaderData } from 'react-router-dom';
 import {
   getMessages, sendMessage, getDocumentById,
 } from 'Utilities';
-import { useAuth } from '../context/UserContext';
 import InfoPanel from '../components/InfoPanel';
 import Chat from '../components/Chat';
 import NewMessageForm from '../components/NewMessageForm';
 import '../scss/style.scss';
 
 export async function loader({ params }) {
-  return { params };
+  const { groupId } = params;
+  const group = await getDocumentById(groupId);
+  return group;
 }
 
 export async function action({ request, params }) {
-  const { contactId } = params;
+  const { groupId } = params;
   const formData = await request.formData();
   const message = formData.get('newMessage');
   if (message.trim() === '') return null;
-  await sendMessage(message, contactId);
+  await sendMessage(message, groupId);
   return null;
 }
 
-export default function PvtChat() {
+export default function GroupChat() {
+  const groupData = useLoaderData();
+  const { id } = groupData;
   const [messages, setMessages] = useState([]);
-  const [contact, setContact] = useState('');
-  const { currentUser } = useAuth();
-  const { params } = useLoaderData();
-  const { contactId } = params;
-
-  const filteredMessages = messages.filter((msg) => (msg.receiver === contactId && msg.sender === currentUser.uid)
-    || (msg.sender === contactId && msg.receiver === currentUser.uid));
+  const filteredMessages = messages.filter((msg) => msg.receiver === id);
 
   useEffect(() => {
     getMessages(setMessages);
-    getDocumentById(contactId)
-      .then((user) => setContact(user));
-  }, [messages.length, contactId]);
+  }, [messages.length, id]);
 
   return (
     <>
-      {contact
-        && <InfoPanel data={contact} />}
+      {id
+        && <InfoPanel data={groupData} />}
       <div className="chatContainer">
         <Chat messages={filteredMessages} />
       </div>
       <div className="newMessageContainer">
         <Form method="post">
-          <NewMessageForm msgLength={messages.length} contactId={contactId} />
+          <NewMessageForm msgLength={messages.length} groupId={id} />
         </Form>
       </div>
     </>

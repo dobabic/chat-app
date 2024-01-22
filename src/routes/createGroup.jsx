@@ -18,7 +18,8 @@ export default function CreateGroup() {
       <div>Create Group</div>
       <Form method="post" action="/createGroup">
         <input type="text" name="groupName" placeholder="Name" />
-        <input hidden readOnly type="text" name="currentUser" value={currentUser.uid} />
+        <input hidden readOnly type="text" name="userName" value={currentUser.displayName} />
+        <input hidden readOnly type="text" name="userId" value={currentUser.uid} />
         <button type="submit">Create Group</button>
       </Form>
     </>

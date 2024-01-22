@@ -1,11 +1,12 @@
 @import '../../../../../../scss/config';
 
 .search {
-    @include boxSize(70%, 80%);
+    @include boxSize(75%, 90%);
     position: relative;
 
     input {
         @include boxSize(100%, 100%);
+        display: flex;
         border: none;
         border-radius: 10px;
         padding-left: 35px;
@@ -18,8 +19,7 @@
     img {
         @include boxSize(70%, 10%);
         position: absolute;
-        padding: 5px;
-        top: 6px;
-        left: 10px;
+        top: 8px;
+        left: 8px;
     }
 }

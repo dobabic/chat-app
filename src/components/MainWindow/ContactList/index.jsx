@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getUsers, getGroups, getUserContacts } from 'Utilities';
+import {
+  getUsers, getGroups, getUserContacts, deleteContact,
+} from 'Utilities';
 import { useAuth } from 'Context/UserContext';
 import Contact from './Contact';
 import Group from './Group';
@@ -19,9 +21,9 @@ export default function ContactList() {
   return (
     <div className="contactList">
       {users.map((user) => (userContacts.includes(user.uid)
-        ? <Contact key={user.uid} id={user.uid} contact={user.name} />
+        ? <Contact key={user.uid} contactId={user.uid} contact={user.name} callback={deleteContact} />
         : null))}
-      {groups.map((group) => (group.members.includes(currentUser.uid)
+      {groups.map((group) => (group.members.find((obj) => obj.id === currentUser.uid)
         ? <Group key={group.id} id={group.id} name={group.name} />
         : null))}
     </div>

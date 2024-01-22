@@ -4,7 +4,7 @@ import { storage } from 'Config';
 import { sendMessage } from 'Utilities';
 import './style.scss';
 
-export default function NewMessageForm({ contactId, msgLength }) {
+export default function NewMessageForm({ groupId, msgLength }) {
   const input = useRef(null);
 
   function handleUpload(file) {
@@ -13,7 +13,7 @@ export default function NewMessageForm({ contactId, msgLength }) {
     uploadBytes(imagesRef, fileToUpload)
       .then((data) => {
         getDownloadURL(data.ref)
-          .then((d) => sendMessage(d, contactId))
+          .then((d) => sendMessage(d, groupId))
           .catch((error) => {
             console.log(error);
           });

@@ -1,5 +1,5 @@
 import {
-  doc, setDoc, addDoc, getDoc, updateDoc, collection, serverTimestamp, onSnapshot,
+  doc, setDoc, addDoc, getDoc, deleteDoc, updateDoc, collection, serverTimestamp, onSnapshot,
   query, orderBy, arrayUnion, arrayRemove,
 } from 'firebase/firestore';
 import { signInWithPopup, signOut } from 'firebase/auth';
@@ -50,27 +50,58 @@ export async function deleteContact(id, currentUserId) {
 }
 
 export async function createGroup(data) {
-  const { groupName, currentUser } = data;
-  return addDoc(groupsRef, {
+  const { groupName, userId, userName } = data;
+
+  await addDoc(groupsRef, {
     name: groupName,
-    admin: currentUser,
-    members: [currentUser],
+    admin: userId,
+    members: [{
+      name: userName,
+      id: userId,
+    }],
   });
 }
 
-// export async function deleteGroup(id, currentUserId) {
-//   const docRef = doc(db, 'users', `${currentUserId}`);
+export async function addToGroup(groupId, contact) {
+  const docRef = doc(db, 'groups', `${groupId}`);
+  const { name, id } = contact;
 
-//   await updateDoc(docRef, {
-//     contacts: arrayRemove(`${id}`),
-//   });
-// }
+  await updateDoc(docRef, {
+    members: arrayUnion({ name, id }),
+  });
+}
+
+export async function removeFromGroup(contactId, groupId) {
+  const docRef = doc(db, 'groups', `${groupId}`);
+  const docSnap = (await getDoc(docRef)).data();
+  const arr = docSnap.members.find((obj) => obj.id === contactId);
+
+  await updateDoc(docRef, {
+    members: arrayRemove(arr),
+  });
+}
+
+export async function leaveGroup(userId, groupId) {
+  const docRef = doc(db, 'groups', `${groupId}`);
+  const docSnap = (await getDoc(docRef)).data();
+  const arr = await docSnap.members.find((obj) => obj.id === userId);
+
+  await updateDoc(docRef, {
+    members: arrayRemove(arr),
+  });
+}
+
+export async function deleteGroup(groupId) {
+  const docRef = doc(db, 'groups', `${groupId}`);
+  await deleteDoc(docRef);
+}
 
 export async function getDocumentById(Id) {
   const collection = Id.length < 28 ? 'groups' : 'users';
   const docRef = doc(db, collection, `${Id}`);
-  const docSnap = (await getDoc(docRef)).data();
-  return docSnap;
+  const docSnapshot = await getDoc(docRef);
+  const docSnapshotWithId = { id: docSnapshot.id, ...docSnapshot.data() };
+  return docSnapshotWithId;
 }
 
 export async function sendMessage(newMessage, receiverId) {
@@ -88,6 +119,7 @@ export async function sendMessage(newMessage, receiverId) {
     text: newMessage,
     createdAt: serverTimestamp(),
     type: determineMsgType(newMessage),
+    name: auth.currentUser.displayName,
     sender: uid,
     receiver: receiverId || null,
   });
@@ -123,8 +155,8 @@ export async function sendMessage(newMessage, receiverId) {
 
 export function getUserContacts(userId, callback) {
   const docRef = doc(db, 'users', `${userId}`);
-  onSnapshot(docRef, (doc) => {
-    const data = doc.data();
+  onSnapshot(docRef, (snapshot) => {
+    const data = snapshot.data();
     callback(data.contacts);
   });
 }
@@ -147,5 +179,13 @@ export function getGroups(callback) {
   onSnapshot(groupsQuery, (snapshot) => {
     const groups = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     callback(groups);
+  });
+}
+
+export function getGroup(groupId, callback) {
+  const docRef = doc(db, 'groups', `${groupId}`);
+  onSnapshot(docRef, (snapshot) => {
+    const group = snapshot.data();
+    callback(group);
   });
 }

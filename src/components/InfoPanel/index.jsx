@@ -4,17 +4,16 @@ import { useAuth } from 'Context/UserContext';
 import AdminControls from './AdminControls';
 import Controls from './Controls';
 
-export default function InfoPanel({ contact }) {
+export default function InfoPanel({ data }) {
   const { currentUser } = useAuth();
-  const groupAdmin = contact.admin;
-  const controlsRender = currentUser.uid === groupAdmin ? <AdminControls /> : <Controls />;
-  const image = contact.image || 'https://placehold.co/200x200';
-  const { name } = contact;
+  const { name, admin, id } = data;
+  const controlRender = currentUser.uid === admin ? <AdminControls id={id} /> : <Controls />;
+  const image = data.image || 'https://placehold.co/200x200';
 
   return (
     <div className="container">
       <div className="contact-info">
-        {!groupAdmin
+        {!admin
           && (
           <img
             src={image}
@@ -23,8 +22,8 @@ export default function InfoPanel({ contact }) {
           )}
         <span>{name}</span>
       </div>
-      {groupAdmin
-        ? controlsRender
+      {admin
+        ? controlRender
         : null}
     </div>
   );

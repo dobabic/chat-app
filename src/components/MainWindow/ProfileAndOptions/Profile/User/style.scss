@@ -12,27 +12,24 @@
         margin: 0 5px;
 
         img {
-            max-width:100%;
-            max-height:100%;
             border-radius: 50%;
         }
     }
     
     .user-info {
-        @include boxSize(100%, 20%);
-        max-width: 40%;
+        @include boxSize(100%, 15%);
         display: flex;
         flex-grow: 1;
         align-items: center;
     }
 
-    .links {
+    .user-options {
         @include boxSize(100%, 20%);
         display: flex;
         flex-grow: 1;
         justify-content: space-around;
         align-items: center;
-
+        margin-right: 2px;
     }
 
 }
