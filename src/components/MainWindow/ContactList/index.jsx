@@ -1,22 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { getContacts } from 'Utilities';
+import {
+  getUsers, getGroups, getUserContacts, deleteContact,
+} from 'Utilities';
+import { useAuth } from 'Context/UserContext';
 import Contact from './Contact';
-import './style.scss';
+import Group from './Group';
 
 export default function ContactList() {
-  const [contacts, setContacts] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [groups, setGroups] = useState([]);
+  const [userContacts, setUserContacts] = useState([]);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
-    getContacts()
-      .then(setContacts)
-      .catch((err) => console.log(err));
-  }, []);
+    getUsers(setUsers);
+    getUserContacts(currentUser.uid, setUserContacts);
+    getGroups(setGroups);
+  }, [users.length, userContacts.length]);
 
   return (
     <div className="contactList">
-      {contacts.map((contact) => (
-        <Contact key={contact.id} id={contact.id} contact={contact.name} />
-      ))}
+      {users.map((user) => (userContacts.includes(user.uid)
+        ? <Contact key={user.uid} contactId={user.uid} contact={user.name} callback={deleteContact} />
+        : null))}
+      {groups.map((group) => (group.members.find((obj) => obj.id === currentUser.uid)
+        ? <Group key={group.id} id={group.id} name={group.name} />
+        : null))}
     </div>
   );
 }

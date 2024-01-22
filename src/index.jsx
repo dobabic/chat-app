@@ -5,14 +5,26 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { UserContextProvider } from 'Context/UserContext';
+import MainChat, {
+  action as mainChatAction,
+} from './routes/mainChat';
 import PvtChat, {
   loader as pvtChatLoader,
   action as pvtChatAction,
 } from './routes/pvtChat';
-import Chat, {
-  loader as mainChatLoader,
-  action as mainChatAction,
-} from './routes';
+import GroupChat, {
+  loader as groupChatLoader,
+  action as groupChatAction,
+} from './routes/groupChat';
+import CreateGroup, {
+  action as createGroupAction,
+} from './routes/createGroup';
+import leaveAction from './routes/leaveGroup';
+import deleteAction from './routes/deleteGroup';
+import addToGroupAction from './routes/addToGroup';
+import AddContact, {
+  action as addContactAction,
+} from './routes/addContact';
 import Settings from './routes/settings';
 import Account from './routes/account';
 import App from './App';
@@ -25,25 +37,59 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Chat />,
-        loader: mainChatLoader,
+        element: <MainChat />,
         action: mainChatAction,
       },
       {
-        path: '/messages/:contactId',
+        path: '/user/:contactId',
         element: <PvtChat />,
         loader: pvtChatLoader,
         action: pvtChatAction,
       },
+      {
+        path: 'group/:groupId',
+        element: <GroupChat />,
+        loader: groupChatLoader,
+        action: groupChatAction,
+      },
+      // workaround for NavLink for url that does not exist
+      {
+        path: 'group/:groupId/user/*',
+        element: <MainChat />,
+        loader: groupChatLoader,
+        action: groupChatAction,
+      },
+      {
+        path: '/group/:groupId/leaveGroup',
+        action: leaveAction,
+      },
+      {
+        path: '/group/:groupId/deleteGroup',
+        action: deleteAction,
+      },
+      {
+        path: '/group/:groupId/addToGroup',
+        action: addToGroupAction,
+      },
+      {
+        path: '/addContact',
+        element: <AddContact />,
+        action: addContactAction,
+      },
+      {
+        path: '/createGroup',
+        element: <CreateGroup />,
+        action: createGroupAction,
+      },
+      {
+        path: '/settings',
+        element: <Settings />,
+      },
+      {
+        path: '/settings/account',
+        element: <Account />,
+      },
     ],
-  },
-  {
-    path: '/settings',
-    element: <Settings />,
-  },
-  {
-    path: '/settings/account',
-    element: <Account />,
   },
 ]);
 

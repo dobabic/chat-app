@@ -1,21 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, useLoaderData } from 'react-router-dom';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import {
-  getMessages, getContacts, sendMessage, getMsgs,
+  getMessages, sendMessage, getDocumentById,
 } from 'Utilities';
-import { storage } from 'Config';
-import YoutubeEmbed from 'MessageTypes/YoutubeEmbed';
-import ChatMessage from 'MessageTypes/ChatMessage';
-import DatabaseImage from 'MessageTypes/DatabaseImage';
 import { useAuth } from '../context/UserContext';
+import InfoPanel from '../components/InfoPanel';
+import Chat from '../components/Chat';
+import NewMessageForm from '../components/NewMessageForm';
 import '../scss/style.scss';
 
 export async function loader({ params }) {
-  const dbmessages = await getMessages();
-  const contacts = await getContacts();
-  const currentContact = contacts.filter((obj) => obj.id === params.contactId)[0];
-  return { dbmessages, currentContact, params };
+  return { params };
 }
 
 export async function action({ request, params }) {
@@ -27,81 +22,32 @@ export async function action({ request, params }) {
   return null;
 }
 
-const msgComponents = {
-  text: ChatMessage,
-  ytVideo: YoutubeEmbed,
-  image: DatabaseImage,
-};
-
 export default function PvtChat() {
+  const [messages, setMessages] = useState([]);
+  const [contact, setContact] = useState('');
   const { currentUser } = useAuth();
-  const { dbmessages, currentContact, params } = useLoaderData();
-  const [messages, setMessages] = useState(dbmessages);
-  const input = useRef(null);
-  const div = useRef(null);
-  const selectedContact = currentContact.name;
-  const filteredMessages = messages.filter((msg) => msg.receiver === params.contactId && msg.sender === currentUser.uid);
-  const defaultImage = 'https://placehold.co/200x200';
+  const { params } = useLoaderData();
+  const { contactId } = params;
 
-  function handleUpload(file) {
-    const fileToUpload = file;
-    const imagesRef = ref(storage, `images/${fileToUpload.name}`);
-    uploadBytes(imagesRef, fileToUpload)
-      .then((data) => {
-        getDownloadURL(data.ref)
-          .then((d) => sendMessage(d, params.contactId))
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  const filteredMessages = messages.filter((msg) => (msg.receiver === contactId && msg.sender === currentUser.uid)
+    || (msg.sender === contactId && msg.receiver === currentUser.uid));
 
   useEffect(() => {
-    getMsgs(setMessages);
-    div.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    input.current.value = '';
-  }, [messages.length, params.contactId]);
+    getMessages(setMessages);
+    getDocumentById(contactId)
+      .then((user) => setContact(user));
+  }, [messages.length, contactId]);
 
   return (
     <>
-      {selectedContact && (
-      <div className="contact-info">
-        <div className="contact-image">
-          <img
-            src={defaultImage}
-            alt="User Logo"
-          />
-        </div>
-        <div className="contact-name">
-          <span>{ selectedContact }</span>
-        </div>
-      </div>
-      )}
+      {contact
+        && <InfoPanel data={contact} />}
       <div className="chatContainer">
-        {filteredMessages.map((msg) => {
-          const MsgComponent = msgComponents[msg.type];
-          return <MsgComponent key={msg.id} sender={msg.sender} text={msg.text} />;
-        })}
-        <div ref={div} />
+        <Chat messages={filteredMessages} />
       </div>
       <div className="newMessageContainer">
         <Form method="post">
-          <input
-            id="input"
-            placeholder="Type a message"
-            ref={input}
-            name="newMessage"
-          />
-          <button type="submit">
-            ✉️
-          </button>
-          <label htmlFor="uploadImage" className="upload-label">
-            <input id="uploadImage" type="file" onChange={(event) => handleUpload(event.target.files[0])} />
-            &#x1F4CE;
-          </label>
+          <NewMessageForm msgLength={messages.length} contactId={contactId} />
         </Form>
       </div>
     </>

@@ -6,7 +6,7 @@
     justify-content: space-evenly;
     align-items: center;
 
-    >img {
+    > img {
         @include boxSize(70%, 10%);
         background-color: white;
         border-radius: 10px;
